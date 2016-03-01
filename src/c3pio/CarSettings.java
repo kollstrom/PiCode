@@ -22,6 +22,9 @@ public class CarSettings {
     }
 
     public void setSteeringWheelTilt(int steeringWheelTilt) {
+        if (steeringWheelTilt > 90){
+            throw new IllegalArgumentException("Too big number");
+        }
         this.steeringWheelTilt = steeringWheelTilt;
     }
 
