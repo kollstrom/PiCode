@@ -1,14 +1,15 @@
-package c3pio;
-
+import c3pio.CarSettings;
 import junit.framework.TestCase;
 
 /**
- * Created by EmilOrvik on 01.03.2016.
+ * Created by Emil on 01.03.2016.
  */
 public class CarSettingsTest extends TestCase {
 
     public void testSetSteeringWheelTilt() throws Exception {
-
+        CarSettings car1 = new CarSettings();
+        car1.setSteeringWheelTilt(90);
+        assertEquals(90, car1.getSteeringWheelTilt());
     }
 
     public void testSetSteeringWheelDepth() throws Exception {
