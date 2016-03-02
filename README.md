@@ -1,5 +1,6 @@
 # PiCode
 
+Etter cloning eller pulling av prosjektet må disse stegene gjennomføres.
 
 I .gitignore har vi *.class, ettersom man ikke skal dra med kompilerte filer fra maskin til maskin. 
 For å kompilere .java-filene må du:
