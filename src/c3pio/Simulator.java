@@ -1,8 +1,12 @@
 package c3pio;
 
+import org.json.simple.JSONObject;
+
 import java.util.Scanner;
 
 public class Simulator {
+
+    private JSONObject JSON = new JSONObject();
 
     public static void print(Object o){
             System.out.println(o);
@@ -274,6 +278,10 @@ public class Simulator {
             ignitionTypeString = scanner.nextLine();
         }
 
+        convertToIgnitionType(c, ignitionTypeString);
+    }
+
+    private static void convertToIgnitionType(CarSettings c, String ignitionTypeString) {
         if(ignitionTypeString.toLowerCase().equals("off")){
             c.setIgnitionStatus(CarSettings.IgnitionStatusType.OFF);
             print("Ignition status was changed to off");
