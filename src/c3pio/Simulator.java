@@ -1,7 +1,12 @@
 package c3pio;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class Simulator {
@@ -27,6 +32,7 @@ public class Simulator {
         String help = "\nType: \n" +
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
+                "BT - to read from app via bluetooth \n" +
                 "quit - to quit program\n \n";
 
         print("Welcome to your car.\n");
@@ -38,6 +44,24 @@ public class Simulator {
             }
             if(in.equals("settings")){
                 print(carSettings);
+            }
+            else if(in.equals("BT") || in.equals("bt") || in.equals("Bt") || in.equals("bT")){
+                JSONParser parser = new JSONParser();
+                try{
+                    Object obj = parser.parse(new FileReader("C:/Users/Philipp/C3P0/PiCode/src/data/username.json"));
+                    JSONArray array = (JSONArray)obj;
+                    controller.setCarSettingsFromJSON(array.toString());
+
+                }
+                catch (FileNotFoundException e){
+                    System.err.println("File not found.");
+                }
+
+                catch (Exception e){
+                    System.err.println("An error has occured!");
+                    System.out.println(e);
+                }
+
             }
             else if(in.equals("change")){
                 // Method that lists all setting-numbers and enters new menu
