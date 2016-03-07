@@ -1,5 +1,10 @@
 # PiCode
 
+For å kjøre på Pi-en:
+    cd inn i /src
+    kompiler: javac c3pio/*.java
+    kjør: java c3pio/Controller
+
 Etter cloning eller pulling av prosjektet må disse stegene gjennomføres.
 
 I .gitignore har vi *.class, ettersom man ikke skal dra med kompilerte filer fra maskin til maskin. 
