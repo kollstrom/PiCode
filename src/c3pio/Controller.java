@@ -48,10 +48,10 @@ public class Controller {
 
 
     }
-
     public static void main(String[] args){
-        CarSettings carSettings = new CarSettings();
         Controller c = new Controller();
+
+/*        CarSettings carSettings = new CarSettings();
         JSONObject j = c.getCarSettingsAsJSON(carSettings);
         StringWriter out = new StringWriter();
         try{
@@ -78,8 +78,8 @@ public class Controller {
                 "\"seat_back_depth\":5,"+
                 "\"temperature\":21}"+
                 "]");
+*/
     }
-
     private static CarSettings.IgnitionStatusType getIgnitionStatusTypeFromString(String ignitionTypeString) {
         if(ignitionTypeString.toLowerCase().equals("off")){
             return CarSettings.IgnitionStatusType.OFF;
