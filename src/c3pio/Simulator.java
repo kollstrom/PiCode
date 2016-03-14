@@ -4,9 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.Scanner;
 
 public class Simulator {
@@ -33,6 +31,7 @@ public class Simulator {
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
                 "BT - to read from app via bluetooth \n" +
+                "check - to check your alcoholconsentration \n" +
                 "quit - to quit program\n \n";
 
         print("Welcome to your car.\n");
@@ -62,6 +61,9 @@ public class Simulator {
                     System.out.println(e);
                 }
 
+            }
+            else if(in.equals("check")){
+                alcoholmeasurement();
             }
             else if(in.equals("change")){
                 // Method that lists all setting-numbers and enters new menu
@@ -328,6 +330,40 @@ public class Simulator {
         else if(ignitionTypeString.toLowerCase().equals("run")){
             c.setIgnitionStatus(CarSettings.IgnitionStatusType.RUN);
             print("Ignition status was changed to run");
+        }
+    }
+
+    public static void alcoholmeasurement(){
+        try {
+
+            // run the Unix "ps -ef" command
+            // using the Runtime exec method:
+            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/printsomething.py");
+
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            // read the output from the command
+            System.out.println("Here is the standard output of the command:\n");
+
+            long startTime = System.currentTimeMillis();
+            String s = null;
+
+            while(false||(System.currentTimeMillis()-startTime)<10000){
+                if ((s = stdInput.readLine()) != null) {
+                    System.out.println(s);
+                }
+            }
+
+            System.exit(0);
+
+        }
+        catch (IOException e) {
+            System.out.println("exception happened - here's what I know: ");
+            e.printStackTrace();
+            System.exit(-1);
+
         }
     }
 }
