@@ -341,22 +341,22 @@ public class Simulator {
 
             // run the Unix "ps -ef" command
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/arduinoReader.py");
+            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/printsomething.py");
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
             // read the output from the command
-            System.out.println("Here is the standard output of the command:\n");
 
             long startTime = System.currentTimeMillis();
             String s = null;
             ArrayList<String> alcoholValues = new ArrayList<>();
 
-            while(false||(System.currentTimeMillis()-startTime)<10000){
+            while(false||(System.currentTimeMillis()-startTime)<5000){
                 if ((s = stdInput.readLine()) != null) {
                     alcoholValues.add(s);
+                    print(s);
                     Thread.sleep(10);
                 }
             }
@@ -381,7 +381,7 @@ public class Simulator {
                 highest = alcoholValue;
             }
         }
-        return highest/100;
+        return highest/1000;
     }
 
     private static int parseToDouble(String s) {
