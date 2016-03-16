@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Simulator {
@@ -47,7 +48,7 @@ public class Simulator {
             else if(in.equals("BT") || in.equals("bt") || in.equals("Bt") || in.equals("bT")){
                 JSONParser parser = new JSONParser();
                 try{
-                    Object obj = parser.parse(new FileReader("C:/Users/Philipp/C3P0/PiCode/src/data/username.json"));
+                    Object obj = parser.parse(new FileReader("../PiCode/src/data/username.json"));
                     JSONArray array = (JSONArray)obj;
                     controller.setCarSettingsFromJSON(array.toString());
 
@@ -63,7 +64,8 @@ public class Simulator {
 
             }
             else if(in.equals("check")){
-                alcoholmeasurement();
+                print("Your permille is : ");
+                print(alcoholMeasurement());
             }
             else if(in.equals("change")){
                 // Method that lists all setting-numbers and enters new menu
@@ -333,12 +335,13 @@ public class Simulator {
         }
     }
 
-    public static void alcoholmeasurement(){
+    public static double alcoholMeasurement(){
+        double permille = -1.0;
         try {
 
             // run the Unix "ps -ef" command
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/printsomething.py");
+            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/arduinoReader.py");
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -349,21 +352,39 @@ public class Simulator {
 
             long startTime = System.currentTimeMillis();
             String s = null;
+            ArrayList<String> alcoholValues = new ArrayList<>();
 
             while(false||(System.currentTimeMillis()-startTime)<10000){
                 if ((s = stdInput.readLine()) != null) {
-                    System.out.println(s);
+                    alcoholValues.add(s);
+                    Thread.sleep(10);
                 }
             }
-
-            System.exit(0);
-
+            permille = calculatePermille(alcoholValues);
         }
         catch (IOException e) {
             System.out.println("exception happened - here's what I know: ");
             e.printStackTrace();
             System.exit(-1);
 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        return permille;
+    }
+
+    private static double calculatePermille(ArrayList<String> s) {
+        double highest = 0.0;
+        for (String value : s) {
+            int alcoholValue = parseToDouble(value);
+            if (alcoholValue > highest) {
+                highest = alcoholValue;
+            }
+        }
+        return highest/100;
+    }
+
+    private static int parseToDouble(String s) {
+        return Integer.parseInt(s.replaceAll("[\\D]", ""));
     }
 }
