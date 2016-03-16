@@ -5,6 +5,9 @@ For å kjøre på Pi-en:
     legg til simplejson-jar-filen i classpath: export CLASSPATH="/home/pi/Documents/json-simple-1.1.1.jar:." //eller tilsvarende sti hvor json-simple er lagret.
     kompiler: javac c3pio/*.java
     kjør: java c3pio/Controller
+    
+Fin alle porter på pi'en:
+    skriv i terminalen til pi'en: ls /dev/tty*
 
 Etter cloning eller pulling av prosjektet må disse stegene gjennomføres.
 
