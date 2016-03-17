@@ -1,0 +1,71 @@
+Data format:
+
+{"name":ignition_status",
+        "value":"accessory",
+        "timestamp":1362060009.989000}
+
+Timestamp uses UNIX-time. Number of seconds since 00:00:00 UTC, 1/1/1970
+
+Dataset contents:
+
+profile_name
+profile_email
+ignition_status
+steering_wheel_tilt
+radio_station
+wing_mirror_left_x
+wing_mirror_left_y
+wing_mirror_right_x
+wing_mirror_right_y
+temperature
+
+Data description:
+
+profile_name
+    String used ad global-ID
+
+profile_email
+    String with user's email
+
+ignition_status
+    States: off, accessory, run, start
+    Frequency: 1Hz, but sent immediately on change
+
+steering_wheel_tilt
+    Integer between 0 and 90
+
+steering_wheel_depth
+    Integer between 0 and 10
+
+radio_station
+    String with name of radio-station
+
+wing_mirror_left_x
+    Integer between -25 and 25
+
+wing_mirror_left_y
+    Integer between -25 and 25
+
+wing_mirror_right_x
+    Integer between -25 and 25
+
+wing_mirror_right_x
+    Integer between -25 and 25
+
+seat_height
+    Integer between 0 and 10
+
+seat_depth
+    Integer between 0 and 10
+
+seat_back_angle
+    Integer between -90 and 90
+
+seat_head_angle
+    Integer -90 and 90
+
+seat_back_depth
+    Integer between 0 and 10
+
+temperature
+    Integer between 15 and 25

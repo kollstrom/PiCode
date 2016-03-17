@@ -1,21 +1,38 @@
 package c3pio;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Simulator {
+
+    private JSONObject JSON = new JSONObject();
+    private Controller controller;
+    private CarSettings carSettings;
+
+    public Simulator(Controller controller, CarSettings carSettings) {
+        this.controller = controller;
+        this.carSettings = carSettings;
+        this.run();
+    }
 
     public static void print(Object o){
             System.out.println(o);
     }
 
-    public static void main(String[] args) {
-	    CarSettings c = new CarSettings();
-        // System.out.println(c);
+    public void run() {
+        // System.out.println(carSettings);
 
         Scanner scanner = new Scanner(System.in);
         String help = "\nType: \n" +
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
+                "BT - to read from app via bluetooth \n" +
+                "check - to check your alcoholconsentration \n" +
                 "quit - to quit program\n \n";
 
         print("Welcome to your car.\n");
@@ -26,72 +43,95 @@ public class Simulator {
                 in = scanner.nextLine();
             }
             if(in.equals("settings")){
-                print(c);
+                print(carSettings);
+            }
+            else if(in.equals("BT") || in.equals("bt") || in.equals("Bt") || in.equals("bT")){
+                JSONParser parser = new JSONParser();
+                try{
+                    Object obj = parser.parse(new FileReader("../PiCode/src/data/username.json"));
+                    JSONArray array = (JSONArray)obj;
+                    controller.setCarSettingsFromJSON(array.toString());
+
+                }
+                catch (FileNotFoundException e){
+                    System.err.println("File not found.");
+                }
+
+                catch (Exception e){
+                    System.err.println("An error has occured!");
+                    System.out.println(e);
+                }
+
+            }
+            else if(in.equals("check")){
+                print("Please blow into the sensor.");
+                print("Your Blood Alcohol Concentration is : ");
+                print(alcoholMeasurement());
             }
             else if(in.equals("change")){
                 // Method that lists all setting-numbers and enters new menu
                 // that allows you to choose what to change and enter input
-                print(c.toString()+ "\n");
+                print(carSettings.toString()+ "\n");
                 print("Type 0 to change all settings. \nType 1-14 to change one setting at a time.");
                 String change = scanner.nextLine();
                 switch (change){
                     case "0":
-                        changeIgnitionType(c, scanner);
-                        changeSteeringWheelTilt(c, scanner);
-                        changeSteeringWheelDepth(c, scanner);
-                        changeRadioStation(c, scanner);
-                        changeWingMirrorLeftX(c, scanner);
-                        changeWingMirrorLeftY(c, scanner);
-                        changeWingMirrorRightX(c, scanner);
-                        changeWingMirrorRightY(c, scanner);
-                        changeSeatHeight(c, scanner);
-                        changeSeatDepth(c, scanner);
-                        changeSeatBackAngle(c, scanner);
-                        changeSeatHeadAngle(c, scanner);
-                        changeSeatBackDepth(c, scanner);
-                        changeTemperature(c, scanner);
+                        changeIgnitionType(carSettings, scanner);
+                        changeSteeringWheelTilt(carSettings, scanner);
+                        changeSteeringWheelDepth(carSettings, scanner);
+                        changeRadioStation(carSettings, scanner);
+                        changeWingMirrorLeftX(carSettings, scanner);
+                        changeWingMirrorLeftY(carSettings, scanner);
+                        changeWingMirrorRightX(carSettings, scanner);
+                        changeWingMirrorRightY(carSettings, scanner);
+                        changeSeatHeight(carSettings, scanner);
+                        changeSeatDepth(carSettings, scanner);
+                        changeSeatBackAngle(carSettings, scanner);
+                        changeSeatHeadAngle(carSettings, scanner);
+                        changeSeatBackDepth(carSettings, scanner);
+                        changeTemperature(carSettings, scanner);
                         break;
                     case "1":
-                        changeIgnitionType(c, scanner);
+                        changeIgnitionType(carSettings, scanner);
                         break;
                     case "2":
-                        changeSteeringWheelTilt(c, scanner);
+                        changeSteeringWheelTilt(carSettings, scanner);
                         break;
                     case "3":
-                        changeSteeringWheelDepth(c, scanner);
+                        changeSteeringWheelDepth(carSettings, scanner);
                         break;
                     case "4":
-                        changeRadioStation(c, scanner);
+                        changeRadioStation(carSettings, scanner);
                         break;
                     case "5":
-                        changeWingMirrorLeftX(c, scanner);
+                        changeWingMirrorLeftX(carSettings, scanner);
                         break;
                     case "6":
-                        changeWingMirrorLeftY(c, scanner);
+                        changeWingMirrorLeftY(carSettings, scanner);
                         break;
                     case "7":
-                        changeWingMirrorRightX(c, scanner);
+                        changeWingMirrorRightX(carSettings, scanner);
                         break;
                     case "8":
-                        changeWingMirrorRightY(c, scanner);
+                        changeWingMirrorRightY(carSettings, scanner);
                         break;
                     case "9":
-                        changeSeatHeight(c, scanner);
+                        changeSeatHeight(carSettings, scanner);
                         break;
                     case "10":
-                        changeSeatDepth(c, scanner);
+                        changeSeatDepth(carSettings, scanner);
                         break;
                     case "11":
-                        changeSeatBackAngle(c, scanner);
+                        changeSeatBackAngle(carSettings, scanner);
                         break;
                     case "12":
-                        changeSeatHeadAngle(c, scanner);
+                        changeSeatHeadAngle(carSettings, scanner);
                         break;
                     case "13":
-                        changeSeatBackDepth(c, scanner);
+                        changeSeatBackDepth(carSettings, scanner);
                         break;
                     case "14":
-                        changeTemperature(c, scanner);
+                        changeTemperature(carSettings, scanner);
                         break;
                     default:
                         print(change+ " wasn't recognized as a command.");
@@ -274,6 +314,10 @@ public class Simulator {
             ignitionTypeString = scanner.nextLine();
         }
 
+        convertToIgnitionType(c, ignitionTypeString);
+    }
+
+    private static void convertToIgnitionType(CarSettings c, String ignitionTypeString) {
         if(ignitionTypeString.toLowerCase().equals("off")){
             c.setIgnitionStatus(CarSettings.IgnitionStatusType.OFF);
             print("Ignition status was changed to off");
@@ -290,5 +334,61 @@ public class Simulator {
             c.setIgnitionStatus(CarSettings.IgnitionStatusType.RUN);
             print("Ignition status was changed to run");
         }
+    }
+
+    public static double alcoholMeasurement(){
+        double permille = -1.0;
+        try {
+
+            // run the Unix "ps -ef" command
+            // using the Runtime exec method:
+            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/printsomething.py");
+
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            // read the output from the command
+
+            long startTime = System.currentTimeMillis();
+            String s = null;
+            ArrayList<String> alcoholValues = new ArrayList<>();
+
+            while(false||(System.currentTimeMillis()-startTime)<5000){
+                s = stdInput.readLine();
+                if (s != null && !s.equals("") && !s.equals(" ") && !s.equals(", ") && !s.equals(",")) {
+                    alcoholValues.add(s);
+                    Thread.sleep(1);
+                }
+            }
+            permille = calculateBAC(alcoholValues);
+        }
+        catch (IOException e) {
+            System.out.println("exception happened - here's what I know: ");
+            e.printStackTrace();
+            System.exit(-1);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return permille;
+    }
+
+    private static double calculateBAC(ArrayList<String> s) {
+        double highest = 0.0;
+        for (String value : s) {
+            int alcoholValue = parseToInt(value);
+            if (alcoholValue > highest) {
+                highest = alcoholValue;
+            }
+        }
+        return highest/1000;
+    }
+
+    private static int parseToInt(String s) {
+        int result = Integer.parseInt(s.replaceAll("[\\D]", ""));
+
+        if (result > 599) return -1;
+        return result;
     }
 }
