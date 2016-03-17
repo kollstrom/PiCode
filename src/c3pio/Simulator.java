@@ -64,7 +64,8 @@ public class Simulator {
 
             }
             else if(in.equals("check")){
-                print("Your permille is : ");
+                print("Please blow into the sensor.");
+                print("Your Blood Alcohol Concentration is : ");
                 print(alcoholMeasurement());
             }
             else if(in.equals("change")){
@@ -354,13 +355,13 @@ public class Simulator {
             ArrayList<String> alcoholValues = new ArrayList<>();
 
             while(false||(System.currentTimeMillis()-startTime)<5000){
-                if ((s = stdInput.readLine()) != null) {
+                s = stdInput.readLine();
+                if (s != null && !s.equals("") && !s.equals(" ") && !s.equals(", ") && !s.equals(",")) {
                     alcoholValues.add(s);
-                    print(s);
-                    Thread.sleep(10);
+                    Thread.sleep(1);
                 }
             }
-            permille = calculatePermille(alcoholValues);
+            permille = calculateBAC(alcoholValues);
         }
         catch (IOException e) {
             System.out.println("exception happened - here's what I know: ");
@@ -373,10 +374,10 @@ public class Simulator {
         return permille;
     }
 
-    private static double calculatePermille(ArrayList<String> s) {
+    private static double calculateBAC(ArrayList<String> s) {
         double highest = 0.0;
         for (String value : s) {
-            int alcoholValue = parseToDouble(value);
+            int alcoholValue = parseToInt(value);
             if (alcoholValue > highest) {
                 highest = alcoholValue;
             }
@@ -384,7 +385,10 @@ public class Simulator {
         return highest/1000;
     }
 
-    private static int parseToDouble(String s) {
-        return Integer.parseInt(s.replaceAll("[\\D]", ""));
+    private static int parseToInt(String s) {
+        int result = Integer.parseInt(s.replaceAll("[\\D]", ""));
+
+        if (result > 599) return -1;
+        return result;
     }
 }

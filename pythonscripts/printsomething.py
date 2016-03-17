@@ -1,2 +1,2 @@
 while 1:
-    print("werw123dfsdf")
+    print("werw 123 dfsdf")
