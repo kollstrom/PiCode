@@ -30,7 +30,8 @@ public class Controller {
 
         try{
            JSONObject JSONObject = stringToJSON(profileAsJSON);
-            
+            System.out.println("Execute file: " + JSONObject);
+
             carSettings.setIgnitionStatus(Controller.getIgnitionStatusTypeFromString(JSONObject.get("ignition_status").toString()));
             carSettings.setSteeringWheelTilt(Integer.parseInt(JSONObject.get("steering_wheel_tilt").toString()));
             carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
@@ -50,7 +51,7 @@ public class Controller {
 
         }
         catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.print("Someting wang with recieved JSON");
         }
 
 

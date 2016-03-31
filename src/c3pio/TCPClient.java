@@ -17,11 +17,11 @@ public class TCPClient {
             System.out.println("Read file");
 
             Object obj = parser.parse(new FileReader("C:\\Users\\Miklel\\Documents\\NTNU\\PU\\PiCode\\PiCode\\src\\c3pio\\username.json"));
-            System.out.println(obj);
-            JSONObject testObj = (JSONObject) obj;
-            System.out.println(testObj.toString());
 
-            payload.put("request","save");
+            JSONObject testObj = (JSONObject) obj;
+
+
+            payload.put("request","execute");
             payload.put("profile",testObj.toString());
         }
 

@@ -88,7 +88,6 @@ class TCPServer implements Runnable{
 
     public void requestExecute(JSONObject payload){
         try{
-            System.out.println("Executing");
             controller.setCarSettingsFromJSON(payload.get("profile").toString());
         }
         catch (Exception e){
