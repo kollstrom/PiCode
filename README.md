@@ -1,4 +1,4 @@
-# PiCode
+    # PiCode
 
 For å kjøre på Pi-en:
     cd inn i /src
