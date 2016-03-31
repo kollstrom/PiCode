@@ -14,7 +14,10 @@ public class TCPClient {
 
         JSONObject payload = new JSONObject();
         try{
-            Object obj = parser.parse(new FileReader("C:\\Users\\Miklel\\Documents\\NTNU\\PU\\PiCode\\src\\c3pio\\username.json"));
+            System.out.println("Read file");
+
+            Object obj = parser.parse(new FileReader("C:\\Users\\Miklel\\Documents\\NTNU\\PU\\PiCode\\PiCode\\src\\c3pio\\username.json"));
+            System.out.println(obj);
             JSONObject testObj = (JSONObject) obj;
             System.out.println(testObj.toString());
 
@@ -22,8 +25,11 @@ public class TCPClient {
             payload.put("profile",testObj.toString());
         }
 
+        catch (FileNotFoundException e){
+            System.out.println("Cant read file");
+        }
         catch (Exception e){
-            System.out.println("Fuck deg");
+            System.out.println("Trouble with JSON");
         }
 
         try{

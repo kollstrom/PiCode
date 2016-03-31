@@ -11,10 +11,13 @@ import java.util.Date;
 public class Controller {
     private CarSettings carSettings;
     private Simulator simulator;
+    private TCPServer server;
 
     public Controller() {
+        this.server = new TCPServer(this);
         this.carSettings = new CarSettings();
         this.simulator = new Simulator(this, this.carSettings);
+
     }
 
     public void setCarSettingsFromJSON(String profileAsJSON){

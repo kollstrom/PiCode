@@ -38,8 +38,11 @@ class TCPServer implements Runnable{
             JSONObject clientJSON = stringToJSON(clientString);
             parseJSON(clientJSON);
         }
-        catch (Exception e){
+        catch (FileNotFoundException e){
             System.out.println("Someting wong");
+        }
+        catch (Exception e){
+            System.out.println("Trouble with Json");
         }
     }
 
