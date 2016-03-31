@@ -5,8 +5,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Simulator {
 
@@ -14,10 +16,25 @@ public class Simulator {
     private Controller controller;
     private CarSettings carSettings;
 
+    private Socket clientSocket;
+    private static BufferedReader input;
+    private static PrintStream ps;
+
     public Simulator(Controller controller, CarSettings carSettings) {
         this.controller = controller;
         this.carSettings = carSettings;
         this.run();
+
+        try {
+            this.clientSocket = new Socket("10.0.1.1", 4321);
+            this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            this.ps = new PrintStream(clientSocket.getOutputStream());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+
     }
 
     public static void print(Object o){
@@ -138,7 +155,23 @@ public class Simulator {
                 }
             }
             else if(in.equals("quit")){
+                ps.print("quit");
+
+                try{
+                    System.out.println(input.readLine());
+                    TimeUnit.MILLISECONDS.sleep(1500);
+                    clientSocket.close();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+
+                System.out.println("Ending program...");
                 break;
+
             }
             else{
                 if(in.equals("")){
@@ -185,6 +218,15 @@ public class Simulator {
     }
 
     private static void changeSeatBackAngle(CarSettings c, Scanner scanner) {
+        //TODO the LegoBrick Code has to be optimized, some of the lines in this method might be redundant
+        ps.print("seat\n");
+        try{
+            print(input.readLine());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
         print("Choose a value between -90 and 90 to change seat back angle: ");
         int sba = scanner.nextInt();
         while(sba < -90 || sba > 90){
@@ -192,7 +234,21 @@ public class Simulator {
             sba = scanner.nextInt();
         }
         c.setSeatBackAngle(sba);
+        ps.print(sba + "\n");
         print("Seat back angle was changed to " + sba);
+        try{
+            print(input.readLine());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        try{
+            TimeUnit.SECONDS.sleep(2);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
     }
 
     private static void changeSeatDepth(CarSettings c, Scanner scanner) {
