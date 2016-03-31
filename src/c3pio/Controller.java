@@ -20,13 +20,17 @@ public class Controller {
 
     }
 
-    public void setCarSettingsFromJSON(String profileAsJSON){
+    public JSONObject stringToJSON(String inputString) throws Exception{
         JSONParser parser = new JSONParser();
+        return (JSONObject) parser.parse(inputString);
+    }
+
+    public void setCarSettingsFromJSON(String profileAsJSON){
+
 
         try{
-            Object obj = parser.parse(profileAsJSON);
-            JSONArray array = (JSONArray)obj;
-            JSONObject JSONObject = (JSONObject)array.get(0);
+           JSONObject JSONObject = stringToJSON(profileAsJSON);
+            
             carSettings.setIgnitionStatus(Controller.getIgnitionStatusTypeFromString(JSONObject.get("ignition_status").toString()));
             carSettings.setSteeringWheelTilt(Integer.parseInt(JSONObject.get("steering_wheel_tilt").toString()));
             carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
