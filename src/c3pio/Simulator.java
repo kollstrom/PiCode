@@ -155,10 +155,8 @@ public class Simulator {
             }
             else if(in.equals("quit")){
                 ps.print("quit");
-
                 try{
-                    System.out.println(input.readLine());
-                    TimeUnit.MILLISECONDS.sleep(1500);
+		   TimeUnit.MILLISECONDS.sleep(1500);
                     clientSocket.close();
                 }
                 catch (IOException e){
