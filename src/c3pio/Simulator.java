@@ -21,7 +21,7 @@ public class Simulator {
     }
 
     public static void print(Object o){
-            System.out.println(o);
+        System.out.println(o);
     }
 
     public void run() {
@@ -354,13 +354,13 @@ public class Simulator {
             ArrayList<String> alcoholValues = new ArrayList<>();
 
             while(false||(System.currentTimeMillis()-startTime)<10000){
-		s = stdInput.readLine();
+                s = stdInput.readLine();
                 if (s != null && !s.equals("") && !s.equals(", ") && !s.equals(" ") && !s.equals(",")) {
                     alcoholValues.add(s);
-                    
+
                     Thread.sleep(1);
                 }
-		
+
             }
             permille = calculatePermille(alcoholValues);
         }
@@ -395,9 +395,9 @@ public class Simulator {
 	s = s.replaceAll("[^-?0-9]+", " ");
 	ArrayList<String> sList = Arrays.asList(str.trim().split(" "));
 */
-	if(result > 999){
-		return -1;
-	}
-	return result;
+        if(result > 999){
+            return -1;
+        }
+        return result;
     }
 }
