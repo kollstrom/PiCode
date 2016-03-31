@@ -36,98 +36,76 @@ public class Controller {
                 carSettings.setSteeringWheelTilt(Integer.parseInt(JSONObject.get("steering_wheel_tilt").toString()));
             }
             catch (Exception e){
-                System.out.println("1");
+                System.out.println("steering_wheel_tilt error");
             }
             try{
                 carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
             }
             catch (Exception e){
-                System.out.println("2");
+                System.out.println("2 steering_wheel_depth");
             }
             try{
                 carSettings.setRadioStation((String) JSONObject.get("radio_station"));
             }
             catch (Exception e){
-                System.out.println("3");
-            }
-            try{
-                carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
-            }
-            catch (Exception e){
-                System.out.println("4");
-            }
-            try{
-                carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
-            }
-            catch (Exception e){
-                System.out.println("5");
-            }
-            try{
-                carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
-            }
-            catch (Exception e){
-                System.out.println("6");
+                System.out.println("3 radio_station");
             }
             try{
                 carSettings.setWingMirrorLeftX(Integer.parseInt(JSONObject.get("wing_mirror_left_x").toString()));
             }
             catch (Exception e){
-                System.out.println("7");
+                System.out.println("4 wing_mirror_left_x");
             }
             try{
                 carSettings.setWingMirrorLeftY(Integer.parseInt(JSONObject.get("wing_mirror_left_y").toString()));
             }
             catch (Exception e){
-                System.out.println("8");
+                System.out.println("5 wing_mirror_left_y");
             }
             try{
                 carSettings.setWingMirrorRightX(Integer.parseInt(JSONObject.get("wing_mirror_right_x").toString()));
             }
             catch (Exception e){
-                System.out.println("9");
+                System.out.println("6 wing_mirror_right_x");
             }
             try{
                 carSettings.setWingMirrorRightY(Integer.parseInt(JSONObject.get("wing_mirror_right_y").toString()));
             }
             catch (Exception e){
-                System.out.println("10");
+                System.out.println("7 wing_mirror_right_y");
             }
             try{
                 carSettings.setSeatHeight(Integer.parseInt(JSONObject.get("seat_height").toString()));
             }
             catch (Exception e){
-                System.out.println("11");
+                System.out.println("8 seat_height");
             } try{
                 carSettings.setSeatDepth(Integer.parseInt(JSONObject.get("seat_depth").toString()));
             }
             catch (Exception e){
-                System.out.println("12");
+                System.out.println("9 seat_depth");
             } try{
                 carSettings.setSeatBackAngle(Integer.parseInt(JSONObject.get("seat_back_angle").toString()));
             }
             catch (Exception e){
-                System.out.println("13");
+                System.out.println("10 seat_back_angle");
             }
             try{
                 carSettings.setSeatHeadAngle(Integer.parseInt(JSONObject.get("seat_depth").toString()));
             }
             catch (Exception e){
-                System.out.println("14");
-            }try{
-
+                System.out.println("11 seat_depth");
             }
-            catch (Exception e){
-                System.out.println("15");
-            }try{
+            try{
                 carSettings.setSeatBackDepth(Integer.parseInt(JSONObject.get("seat_back_depth").toString()));
             }
             catch (Exception e){
-                System.out.println("16");
+                System.out.println("12 seat_back_depth");
             }try{
                 carSettings.setTemperature(Integer.parseInt(JSONObject.get("temperature").toString()));
             }
             catch (Exception e){
-                System.out.println("17");
+                System.out.println("13 temperature");
             }
 
 
