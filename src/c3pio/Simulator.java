@@ -23,7 +23,6 @@ public class Simulator {
     public Simulator(Controller controller, CarSettings carSettings) {
         this.controller = controller;
         this.carSettings = carSettings;
-        this.run();
 
         try {
             this.clientSocket = new Socket("10.0.1.1", 4321);
@@ -33,7 +32,7 @@ public class Simulator {
         catch (IOException e){
             e.printStackTrace();
         }
-
+        this.run();
 
     }
 
