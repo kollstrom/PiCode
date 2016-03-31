@@ -97,7 +97,7 @@ public class Controller {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getCarSettingsAsJSON(CarSettings carSettings){
+    public JSONObject getCarSettingsAsJSON(){
         JSONObject j = new JSONObject();
 
         j.put("ignition_status",carSettings.getIgnitionStatus().toString());
