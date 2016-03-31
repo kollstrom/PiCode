@@ -48,7 +48,7 @@ public class Simulator {
             else if(in.equals("BT") || in.equals("bt") || in.equals("Bt") || in.equals("bT")){
                 JSONParser parser = new JSONParser();
                 try{
-                    Object obj = parser.parse(new FileReader("../PiCode/src/data/username.json"));
+                    Object obj = parser.parse(new FileReader("/home/pi/Documents/PiCode/PiCode/src/data/username.json"));
                     JSONArray array = (JSONArray)obj;
                     controller.setCarSettingsFromJSON(array.toString());
 
@@ -64,7 +64,7 @@ public class Simulator {
 
             }
             else if(in.equals("check")){
-                print("Your permille is : ");
+                print("Your Blood Alcohol Concentration is : ");
                 print(alcoholMeasurement());
             }
             else if(in.equals("change")){
@@ -341,7 +341,7 @@ public class Simulator {
 
             // run the Unix "ps -ef" command
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("python ../PiCode/pythonscripts/printsomething.py");
+            Process p = Runtime.getRuntime().exec("python /home/pi/Documents/PiCode/PiCode/pythonscripts/arduinoReader.py");
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -353,12 +353,14 @@ public class Simulator {
             String s = null;
             ArrayList<String> alcoholValues = new ArrayList<>();
 
-            while(false||(System.currentTimeMillis()-startTime)<5000){
-                if ((s = stdInput.readLine()) != null) {
+            while(false||(System.currentTimeMillis()-startTime)<10000){
+		s = stdInput.readLine();
+                if (s != null && !s.equals("") && !s.equals(", ") && !s.equals(" ") && !s.equals(",")) {
                     alcoholValues.add(s);
-                    print(s);
-                    Thread.sleep(10);
+                    
+                    Thread.sleep(1);
                 }
+		
             }
             permille = calculatePermille(alcoholValues);
         }
@@ -385,6 +387,17 @@ public class Simulator {
     }
 
     private static int parseToDouble(String s) {
-        return Integer.parseInt(s.replaceAll("[\\D]", ""));
+
+        int result = Integer.parseInt(s.replaceAll("[\\D]", ""));
+
+/*
+
+	s = s.replaceAll("[^-?0-9]+", " ");
+	ArrayList<String> sList = Arrays.asList(str.trim().split(" "));
+*/
+	if(result > 999){
+		return -1;
+	}
+	return result;
     }
 }
