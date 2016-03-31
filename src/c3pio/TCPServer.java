@@ -27,19 +27,23 @@ class TCPServer implements Runnable{
 
 
             ServerSocket welcomeSocket = new ServerSocket(6789);
+            while (true){
+                System.out.println("Waiting for connection");
+                Socket connectionSocket = welcomeSocket.accept();
+                System.out.println("Client Connected");
+                this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
-            System.out.println("Waiting for connection");
-            Socket connectionSocket = welcomeSocket.accept();
-            System.out.println("Client Connected");
-            this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                String clientString = inFromClient.readLine();
+                JSONObject clientJSON = stringToJSON(clientString);
 
-            String clientString = inFromClient.readLine();
-            JSONObject clientJSON = stringToJSON(clientString);
+                System.out.println(clientJSON);
 
-            System.out.println(clientJSON);
+                parseJSON(clientJSON);
 
-            parseJSON(clientJSON);
+            }
+
+
         }
         catch (FileNotFoundException e){
             System.out.println("Someting wong");
