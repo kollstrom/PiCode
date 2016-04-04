@@ -21,7 +21,7 @@ public class TCPClient {
             JSONObject testObj = (JSONObject) obj;
 
 
-            payload.put("request","execute");
+            payload.put("request","save");
             payload.put("profile",testObj.toString());
         }
 
