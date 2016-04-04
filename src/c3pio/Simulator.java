@@ -155,17 +155,6 @@ public class Simulator {
             }
             else if(in.equals("quit")){
                 ps.print("quit");
-                try{
-		   TimeUnit.MILLISECONDS.sleep(1500);
-                    clientSocket.close();
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
-                catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-
                 System.out.println("Ending program...");
                 break;
 
@@ -182,6 +171,7 @@ public class Simulator {
     }
 
     private static void changeTemperature(CarSettings c, Scanner scanner) {
+        ps.println("temperature");
         print("Choose a value between 15 and 25 to change temperature: ");
         int tem = scanner.nextInt();
         while(tem < 15 || tem > 25){
@@ -189,10 +179,12 @@ public class Simulator {
             tem = scanner.nextInt();
         }
         c.setTemperature(tem);
+        ps.println(tem);
         print("Temperature was changed to " + tem);
     }
 
     private static void changeSeatBackDepth(CarSettings c, Scanner scanner) {
+        //not implemented in the legoCar
         print("Choose a value between 0 and 10 to change seat back depth: ");
         int sbd = scanner.nextInt();
         while(sbd < 0 || sbd > 10){
@@ -204,6 +196,7 @@ public class Simulator {
     }
 
     private static void changeSeatHeadAngle(CarSettings c, Scanner scanner) {
+        //not implemented in the legoCar
         print("Choose a value between -90 and 90 to change seat head angle: ");
         int sha = scanner.nextInt();
         while(sha < -90 || sha > 90){
@@ -215,15 +208,7 @@ public class Simulator {
     }
 
     private static void changeSeatBackAngle(CarSettings c, Scanner scanner) {
-        //TODO the LegoBrick Code has to be optimized, some of the lines in this method might be redundant
-        ps.print("seat\n");
-        try{
-            print(input.readLine());
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
+        ps.println("seat");
         print("Choose a value between -90 and 90 to change seat back angle: ");
         int sba = scanner.nextInt();
         while(sba < -90 || sba > 90){
@@ -231,24 +216,13 @@ public class Simulator {
             sba = scanner.nextInt();
         }
         c.setSeatBackAngle(sba);
-        ps.print(sba + "\n");
+        ps.println(sba);
         print("Seat back angle was changed to " + sba);
-        try{
-            print(input.readLine());
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        try{
-            TimeUnit.SECONDS.sleep(2);
-        }
-        catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
+        waitForMotors();
     }
 
     private static void changeSeatDepth(CarSettings c, Scanner scanner) {
+        ps.println("seatDepth");
         print("Choose a value between 0 and 10 to change seat depth: ");
         int sd = scanner.nextInt();
         while(sd < 0 || sd > 10){
@@ -256,10 +230,13 @@ public class Simulator {
             sd = scanner.nextInt();
         }
         c.setSeatDepth(sd);
+        ps.println(sd);
         print("Seat depth was changed to " + sd);
+        waitForMotors();
     }
 
     private static void changeSeatHeight(CarSettings c, Scanner scanner) {
+        ps.println("seatHeight");
         print("Choose a value between 0 and 10 to change seat height");
         int sh = scanner.nextInt();
         while(sh < 0 || sh > 10){
@@ -267,10 +244,13 @@ public class Simulator {
             sh = scanner.nextInt();
         }
         c.setSeatHeight(sh);
+        ps.println(sh);
         print("Seat height was changed to " + sh);
+        waitForMotors();
     }
 
     private static void changeWingMirrorRightY(CarSettings c, Scanner scanner) {
+        ps.println("wingMirrorRightY");
         print("Choose a value between -25 and 25 to change wing mirror right y-axis: ");
         int wmry = scanner.nextInt();
         while(wmry < -25 || wmry > 25){
@@ -278,10 +258,13 @@ public class Simulator {
             wmry = scanner.nextInt();
         }
         c.setWingMirrorRightY(wmry);
+        ps.println(wmry);
         print("Wing mirror right y-axis was changed to " + wmry);
+        waitForMotors();
     }
 
     private static void changeWingMirrorRightX(CarSettings c, Scanner scanner) {
+        ps.println("wingMirrorRightX");
         print("Choose a value between -25 and 25 to change wing mirror right x-axis: ");
         int wmrx = scanner.nextInt();
         while(wmrx < -25 || wmrx > 25){
@@ -289,10 +272,13 @@ public class Simulator {
             wmrx = scanner.nextInt();
         }
         c.setWingMirrorRightX(wmrx);
+        ps.println(wmrx);
         print("Wing mirror right x-axis was changed to " + wmrx);
+        waitForMotors();
     }
 
     private static void changeWingMirrorLeftY(CarSettings c, Scanner scanner) {
+        ps.println("wingMirrorLeftY");
         print("Choose a value between -25 and 25 to change wing mirror left y-axis: ");
         int wmly = scanner.nextInt();
         while(wmly < -25 || wmly > 25){
@@ -300,10 +286,13 @@ public class Simulator {
             wmly = scanner.nextInt();
         }
         c.setWingMirrorLeftY(wmly);
+        ps.println(wmly);
         print("Wing mirror left y-axis was changed to " + wmly);
+        waitForMotors();
     }
 
     private static void changeWingMirrorLeftX(CarSettings c, Scanner scanner) {
+        ps.println("windMirrorLeftX");
         print("Choose a value between -25 and 25 to change wing mirror left x-axis: ");
         int wmlx = scanner.nextInt();
         while(wmlx < -25 || wmlx > 25){
@@ -311,10 +300,13 @@ public class Simulator {
             wmlx = scanner.nextInt();
         }
         c.setWingMirrorLeftX(wmlx);
+        ps.println(wmlx);
         print("Wing mirror left x-axis was changed to " + wmlx);
+        waitForMotors();
     }
 
     private static void changeRadioStation(CarSettings c, Scanner scanner) {
+        ps.println("radioStation");
         print("Choose a radio station: ");
         String radioStation = scanner.nextLine();
         if(radioStation.equals("")){
@@ -325,10 +317,12 @@ public class Simulator {
             radioStation = scanner.nextLine();
         }
         c.setRadioStation(radioStation);
+        ps.println(radioStation);
         print("Radio station has been changed to " + radioStation);
     }
 
     private static void changeSteeringWheelDepth(CarSettings c, Scanner scanner) {
+        ps.println("steeringWheelDepth");
         print("Choose a value between 0 and 10 to change steering wheel depth: ");
         int swd = scanner.nextInt();
         while(swd < 0 || swd > 10){
@@ -336,10 +330,13 @@ public class Simulator {
             swd = scanner.nextInt();
         }
         c.setSteeringWheelDepth(swd);
+        ps.println(swd);
         print("Steering wheel depth was changed to " + swd);
+        waitForMotors();
     }
 
     private static void changeSteeringWheelTilt(CarSettings c, Scanner scanner) {
+        ps.println("steeringWheelTilt");
         print("Choose a value between 0 and 90 to change steering wheel tilt: ");
         int swt = scanner.nextInt();
         while(swt < 0 || swt > 90){
@@ -347,7 +344,9 @@ public class Simulator {
             swt = scanner.nextInt();
         }
         c.setSteeringWheelTilt(swt);
+        ps.println(swt);
         print("Steering wheel tilt was changed to " + swt);
+        waitForMotors();
     }
 
     private static void changeIgnitionType(CarSettings c, Scanner scanner) {
@@ -453,4 +452,14 @@ public class Simulator {
         }
         return result;
     }
+
+    private static void waitForMotors() {
+        try{
+            TimeUnit.SECONDS.sleep(2);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
 }
