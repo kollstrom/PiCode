@@ -14,33 +14,36 @@ public class TCPClient {
 
         JSONObject payload = new JSONObject();
         try{
-            Object obj = parser.parse(new FileReader("C:\\Users\\Miklel\\Documents\\NTNU\\PU\\PiCode\\src\\c3pio\\username.json"));
-            JSONObject testObj = (JSONObject) obj;
-            System.out.println(testObj.toString());
+            System.out.println("Read file");
 
-            payload.put("request","save");
+            Object obj = parser.parse(new FileReader("C:\\Users\\Mytino\\Documents\\GitHub\\Programvareutvikling\\CarProfilify\\PiCode\\src\\c3pio\\username.json"));
+
+            JSONObject testObj = (JSONObject) obj;
+
+
+            payload.put("request","execute");
             payload.put("profile",testObj.toString());
         }
 
+        catch (FileNotFoundException e){
+            System.out.println("Cant read file");
+        }
         catch (Exception e){
-            System.out.println("Fuck deg");
+            System.out.println("Trouble with JSON");
         }
 
         try{
 
-            Socket clientSocket = new Socket("129.241.13.44", 6789);
+            Socket clientSocket = new Socket("localhost", 6789);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+            System.out.println(payload.toString());
             outToServer.writeBytes(payload.toString() + '\n');
             String receivedString = inFromServer.readLine();
-
-            System.out.println("FROM SERVER: " + receivedString);
-            System.out.println("COMPARE: " + payload.toString());
-
+            System.out.println(receivedString);
 
             JSONObject jsonObject = (JSONObject) parser.parse(receivedString);
-            System.out.println(jsonObject.toString());
 
 
             clientSocket.close();

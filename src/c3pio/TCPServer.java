@@ -27,19 +27,29 @@ class TCPServer implements Runnable{
 
 
             ServerSocket welcomeSocket = new ServerSocket(6789);
+            while (true){
+                System.out.println("Waiting for connection");
+                Socket connectionSocket = welcomeSocket.accept();
+                System.out.println("Client Connected");
+                this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
-            System.out.println("Waiting for connection");
-            Socket connectionSocket = welcomeSocket.accept();
-            System.out.println("Client Connected");
-            this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                String clientString = inFromClient.readLine();
+                JSONObject clientJSON = stringToJSON(clientString);
 
-            String clientString = inFromClient.readLine();
-            JSONObject clientJSON = stringToJSON(clientString);
-            parseJSON(clientJSON);
+                System.out.println(clientJSON);
+
+                parseJSON(clientJSON);
+
+            }
+
+
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Someting wong");
         }
         catch (Exception e){
-            System.out.println("Someting wong");
+            System.out.println("Trouble with Json");
         }
     }
 
@@ -71,8 +81,7 @@ class TCPServer implements Runnable{
         JSONObject reply = new JSONObject();
         try{
             reply.put("request", "save");
-            reply.put("profile", profile.toString());
-            this.outToClient.writeBytes(reply.toString() + "\n");
+            writeResponse(stringToJSON(profile.toString()));
             System.out.println("Wrote profile to client");
         } catch (Exception e) {
             System.out.println("Couldt reply with profile");
@@ -82,8 +91,10 @@ class TCPServer implements Runnable{
 
     public void requestExecute(JSONObject payload){
         try{
-            System.out.println("Executing");
             controller.setCarSettingsFromJSON(payload.get("profile").toString());
+            JSONObject reply = new JSONObject();
+            reply.put("message", "profile executed");
+            writeResponse(reply);
         }
         catch (Exception e){
             System.out.println("\"profile\" ekisterer ikke i pakken");
@@ -94,5 +105,10 @@ class TCPServer implements Runnable{
     public JSONObject stringToJSON(String inputString) throws Exception{
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(inputString);
+    }
+
+    public void writeResponse(JSONObject reply) throws Exception {
+        this.outToClient.writeBytes(reply.toString() + "\n");
+        System.out.println("wrote response");
     }
 }
