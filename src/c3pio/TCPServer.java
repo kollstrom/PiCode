@@ -81,8 +81,7 @@ class TCPServer implements Runnable{
         JSONObject reply = new JSONObject();
         try{
             reply.put("request", "save");
-            reply.put("profile", profile.toString());
-            this.outToClient.writeBytes(reply.toString() + "\n");
+            writeResponse(stringToJSON(profile.toString()));
             System.out.println("Wrote profile to client");
         } catch (Exception e) {
             System.out.println("Couldt reply with profile");
@@ -93,6 +92,9 @@ class TCPServer implements Runnable{
     public void requestExecute(JSONObject payload){
         try{
             controller.setCarSettingsFromJSON(payload.get("profile").toString());
+            JSONObject reply = new JSONObject();
+            reply.put("message", "profile executed");
+            writeResponse(reply);
         }
         catch (Exception e){
             System.out.println("\"profile\" ekisterer ikke i pakken");
@@ -103,5 +105,10 @@ class TCPServer implements Runnable{
     public JSONObject stringToJSON(String inputString) throws Exception{
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(inputString);
+    }
+
+    public void writeResponse(JSONObject reply) throws Exception {
+        this.outToClient.writeBytes(reply.toString() + "\n");
+        System.out.println("wrote response");
     }
 }
