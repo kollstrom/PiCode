@@ -112,13 +112,15 @@ public class Controller {
 
 
             System.out.println("Successfully read from app.");
+            simulator.printCarSettings();
 
 
         }
         catch (Exception e){
             System.out.print("Someting wang with recieved JSON");
         }
-        simulator.printCarSettings();
+
+
     }
 
     public double alcoholMeasurement(){
