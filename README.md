@@ -12,12 +12,20 @@ Fin alle porter på pi'en:
 Etter cloning eller pulling av prosjektet må disse stegene gjennomføres.
 
 I .gitignore har vi *.class, ettersom man ikke skal dra med kompilerte filer fra maskin til maskin. 
+
 For å kompilere .java-filene må du:
-- Lage en out-mappe under dinFilsti\PiCode
-- Legge den til i Project compiler output:
+- Legge til out-mappen i Project compiler output:
     File > Project Structure > Project:
     Sett Project compiler output til dinFilSti\PiCode\out
     Eksempel: C:\Users\EmilOrvik\Documents\Programmering\pu\PiCode\PiCode\out
+
+    - Sett Project language level til 8
+
+    - Velg Project SDK 8
+
+- Under File Project Structure > Project Settings > Modules > Sources: marker src-mappen og trykk "Mark as: Sources"
+
+- Under Modules > Dependencies: legg til json-simple-1.1.1.jar og junit-4.10.jar
 
 - Gjøre tests-packagen om til en test-folder:
     File > Project Structure > Project:
