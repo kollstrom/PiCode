@@ -71,6 +71,10 @@ class TCPServer implements Runnable{
             case "login":
                 break;
 
+            case "check":
+                this.requestCheck(payload);
+                break;
+
             default:
                 throw new Exception("Default thrown");
         }
@@ -86,6 +90,8 @@ class TCPServer implements Runnable{
         }
     }
 
+
+
     public void requestExecute(JSONObject payload){
         try{
             controller.setCarSettingsFromJSON(payload.get("profile").toString());
@@ -98,6 +104,20 @@ class TCPServer implements Runnable{
         }
 
     }
+
+    public void requestCheck(JSONObject payload){
+        double promilledouble = controller.alcoholMeasurement();
+        String promille = String.valueOf(promilledouble);
+        try{
+            JSONObject reply = new JSONObject();
+            reply.put("message", promille);
+            writeResponse(reply);
+        }
+        catch(Exception e){
+            System.out.println("Wong with alcohol JSON");
+        }
+    }
+
 
     public JSONObject stringToJSON(String inputString) throws Exception{
         JSONParser parser = new JSONParser();

@@ -117,9 +117,14 @@ public class Controller {
         catch (Exception e){
             System.out.print("Someting wang with recieved JSON");
         }
-
-
     }
+
+    public double alcoholMeasurement(){
+
+        return Simulator.alcoholMeasurement();
+    }
+
+
     public static void main(String[] args){
         Controller c = new Controller();
 

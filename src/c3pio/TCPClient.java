@@ -11,7 +11,7 @@ public class TCPClient {
 
         JSONParser parser = new JSONParser();
 
-        String filepath = "C:\\Users\\Mytino\\Documents\\GitHub\\Programvareutvikling\\CarProfilify\\PiCode\\src\\c3pio\\username.json";
+        String filepath = "src\\c3pio\\username.json";
         String host = "localhost";
 
 
@@ -24,7 +24,7 @@ public class TCPClient {
             JSONObject testObj = (JSONObject) obj;
 
 
-            payload.put("request","save");
+            payload.put("request","check");
             payload.put("profile",testObj.toString());
         }
 
