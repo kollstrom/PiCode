@@ -111,12 +111,12 @@ public class Controller {
 
 
             System.out.println("Successfully read from app.");
-            this.simulator.printCarSettings();
+            System.out.println(carSettings);
 
 
         }
         catch (Exception e){
-            System.out.print("Someting wang with recieved JSON");
+            System.out.println("Someting wang with recieved JSON");
         }
 
 

@@ -24,10 +24,6 @@ public class Simulator {
         System.out.println(o);
     }
 
-    public void printCarSettings(){
-        print(this.carSettings);
-    }
-
     public void run() {
         // System.out.println(carSettings);
 
