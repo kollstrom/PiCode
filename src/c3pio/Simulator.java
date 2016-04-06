@@ -341,7 +341,7 @@ public class Simulator {
 
             // run the Unix "ps -ef" command
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("python /home/pi/Documents/PiCode/PiCode/pythonscripts/arduinoReader.py");
+            Process p = Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/arduinoReader.py");
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 

@@ -11,12 +11,15 @@ public class TCPClient {
 
         JSONParser parser = new JSONParser();
 
+        String filepath = "C:\\Users\\Mytino\\Documents\\GitHub\\Programvareutvikling\\CarProfilify\\PiCode\\src\\c3pio\\username.json";
+        String host = "localhost";
+
 
         JSONObject payload = new JSONObject();
         try{
             System.out.println("Read file");
 
-            Object obj = parser.parse(new FileReader("C:\\Users\\Mytino\\Documents\\GitHub\\Programvareutvikling\\CarProfilify\\PiCode\\src\\c3pio\\username.json"));
+            Object obj = parser.parse(new FileReader(filepath));
 
             JSONObject testObj = (JSONObject) obj;
 
@@ -34,7 +37,7 @@ public class TCPClient {
 
         try{
 
-            Socket clientSocket = new Socket("localhost", 6789);
+            Socket clientSocket = new Socket(host, 6789);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
