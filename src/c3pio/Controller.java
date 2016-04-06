@@ -30,7 +30,6 @@ public class Controller {
 
         try{
            JSONObject JSONObject = stringToJSON(profileAsJSON);
-            System.out.println("Execute file: " + JSONObject);
 
             try{
                 carSettings.setSteeringWheelTilt(Integer.parseInt(JSONObject.get("steering_wheel_tilt").toString()));
@@ -112,7 +111,7 @@ public class Controller {
 
 
             System.out.println("Successfully read from app.");
-            simulator.printCarSettings();
+            this.simulator.printCarSettings();
 
 
         }
