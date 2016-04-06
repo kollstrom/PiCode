@@ -114,7 +114,8 @@ class TCPServer implements Runnable{
             writeResponse(reply);
         }
         catch(Exception e){
-            System.out.println("Wong with alcohol JSON");
+            System.out.println("Wong with alcohol JSON" + "/n");
+
         }
     }
 

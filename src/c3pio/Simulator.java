@@ -25,7 +25,7 @@ public class Simulator {
     }
 
     public void printCarSettings(){
-        print(carSettings);
+        print(this.carSettings);
     }
 
     public void run() {
