@@ -24,6 +24,10 @@ public class Simulator {
         System.out.println(o);
     }
 
+    public void printCarSettings(){
+        print(carSettings);
+    }
+
     public void run() {
         // System.out.println(carSettings);
 
@@ -384,7 +388,7 @@ public class Simulator {
                 highest = alcoholValue;
             }
         }
-        return highest/1000;
+        return highest/10000;
     }
 
     private static int parseToDouble(String s) {

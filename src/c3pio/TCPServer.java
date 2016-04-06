@@ -28,9 +28,8 @@ class TCPServer implements Runnable{
 
             ServerSocket welcomeSocket = new ServerSocket(6789);
             while (true){
-                System.out.println("Waiting for connection");
+
                 Socket connectionSocket = welcomeSocket.accept();
-                System.out.println("Client Connected");
                 this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
                 this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
@@ -40,6 +39,7 @@ class TCPServer implements Runnable{
                 System.out.println(clientJSON);
 
                 parseJSON(clientJSON);
+
 
             }
 

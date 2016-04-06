@@ -112,6 +112,7 @@ public class Controller {
 
 
             System.out.println("Successfully read from app.");
+            simulator.printCarSettings();
 
         }
         catch (Exception e){
@@ -127,36 +128,8 @@ public class Controller {
 
     public static void main(String[] args){
         Controller c = new Controller();
-
-/*        CarSettings carSettings = new CarSettings();
-        JSONObject j = c.getCarSettingsAsJSON(carSettings);
-        StringWriter out = new StringWriter();
-        try{
-            j.writeJSONString(out);
-        }
-        catch(Exception e){
-        }
-        System.out.println(j);
-        c.setCarSettingsFromJSON("[" +
-                "{\"profile_name\":\"emil\", \"timestamp\":1364326174.617000," +
-                "\"profile_email\":\"emil@kollstrom.net\", "+
-                "\"ignition_status\":\"off\","+
-                "\"steering_wheel_tilt\":5,"+
-                "\"steering_wheel_depth\":5,"+
-                "\"radio_station\":\"NRK P3\","+
-                "\"wing_mirror_left_x\":5,"+
-                "\"wing_mirror_left_y\":5,"+
-                "\"wing_mirror_right_x\":5,"+
-                "\"wing_mirror_right_y\":5,"+
-                "\"seat_height\":5,"+
-                "\"seat_depth\":5,"+
-                "\"seat_back_angle\":5,"+
-                "\"seat_head_angle\":5,"+
-                "\"seat_back_depth\":5,"+
-                "\"temperature\":21}"+
-                "]");
-*/
     }
+
     private static CarSettings.IgnitionStatusType getIgnitionStatusTypeFromString(String ignitionTypeString) {
         if(ignitionTypeString.toLowerCase().equals("off")){
             return CarSettings.IgnitionStatusType.OFF;
