@@ -171,7 +171,6 @@ public class Simulator {
     }
 
     private static void changeTemperature(CarSettings c, Scanner scanner) {
-        ps.println("temperature");
         print("Choose a value between 15 and 25 to change temperature: ");
         int tem = scanner.nextInt();
         while(tem < 15 || tem > 25){
@@ -179,7 +178,6 @@ public class Simulator {
             tem = scanner.nextInt();
         }
         c.setTemperature(tem);
-        ps.println(tem);
         print("Temperature was changed to " + tem);
     }
 
@@ -208,7 +206,7 @@ public class Simulator {
     }
 
     private static void changeSeatBackAngle(CarSettings c, Scanner scanner) {
-        ps.println("seat");
+        ps.println("seatBackAngle");
         print("Choose a value between -90 and 90 to change seat back angle: ");
         int sba = scanner.nextInt();
         while(sba < -90 || sba > 90){
