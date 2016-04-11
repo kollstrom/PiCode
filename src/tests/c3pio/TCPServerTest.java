@@ -35,7 +35,7 @@ public class TCPServerTest extends TestCase {
             fail("Exception not thrown");
         }
         catch (Exception e){
-            assertEquals("Default thrown",e.getMessage());
+            assertEquals("No request found",e.getMessage());
         }
     }
 
