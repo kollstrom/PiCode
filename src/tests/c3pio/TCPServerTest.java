@@ -2,12 +2,10 @@ package c3pio;
 
 import c3pio.TCPServer;
 import junit.framework.TestCase;
+import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 
-/**
- * Created by Miklel on 14.03.2016.
- */
 public class TCPServerTest extends TestCase {
 
     TCPServer server;
@@ -29,6 +27,7 @@ public class TCPServerTest extends TestCase {
         String returnString = server.stringToJSON(testString).toString();
         assertEquals(testString,returnString);
     }
+
     public void testParseJSON() throws Exception {
         String testString = "{\"request\":\"nonExist\"}";
         try{
@@ -40,5 +39,14 @@ public class TCPServerTest extends TestCase {
         }
     }
 
+    public void testWriteResponse() throws Exception {
+        try {
+            JSONObject reply = new JSONObject();
+            server.writeResponse(reply);
+        }
+        catch (Exception e) {
+
+        }
+    }
 
 }
