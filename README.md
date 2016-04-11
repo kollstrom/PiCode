@@ -32,13 +32,15 @@ For å kompilere .java-filene må du:
     - Velg tests-mappen og gjør den om til Test-folder
 
 Kommentarer:
-if (condition){
-
-/**
-* Husk mellomrom over kommentarblokk
-*
-*
-*/
-
-object.Method();        // Slik forklarer man enkeltlinjer
-}
+<pre>
+    if (condition){
+    
+    /**
+    * Husk mellomrom over kommentarblokk
+    *
+    *
+    */
+    
+    object.Method();        // Slik forklarer man enkeltlinjer
+    }
+</pre>
