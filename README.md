@@ -30,3 +30,15 @@ For å kompilere .java-filene må du:
 - Gjøre tests-packagen om til en test-folder:
     File > Project Structure > Project:
     - Velg tests-mappen og gjør den om til Test-folder
+
+Kommentarer:
+if (condition){
+
+/**
+* Husk mellomrom over kommentarblokk
+*
+*
+*/
+
+object.Method();        // Slik forklarer man enkeltlinjer
+}
