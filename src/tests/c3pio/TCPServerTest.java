@@ -1,12 +1,12 @@
 package c3pio;
 
-import c3pio.TCPServer;
-import junit.framework.TestCase;
 import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class TCPServerTest extends TestCase {
+public class TCPServerTest{
 
     TCPServer server;
 
@@ -22,12 +22,14 @@ public class TCPServerTest extends TestCase {
         server = null;
     }
 
+    @Test
     public void testStringToJSON() throws Exception {
         String testString = "{\"TestType\":\"TestValue\"}";
         String returnString = server.stringToJSON(testString).toString();
         assertEquals(testString,returnString);
     }
 
+    @Test
     public void testParseJSON() throws Exception {
         String testString = "{\"request\":\"nonExist\"}";
         try{
@@ -39,6 +41,14 @@ public class TCPServerTest extends TestCase {
         }
     }
 
-
+    @Test
+    public void testWriteResponse() throws Exception {
+        try {
+            JSONObject reply = new JSONObject();
+            server.writeResponse(reply);
+        } catch (Exception e) {
+            // TODO: Ingenting blir testet her!
+        }
+    }
 
 }
