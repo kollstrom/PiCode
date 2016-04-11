@@ -35,12 +35,12 @@ Kommentarer:
 <pre>
     if (condition){
     
-    /**
-    * Husk mellomrom over kommentarblokk
-    *
-    *
-    */
-    
-    object.Method();        // Slik forklarer man enkeltlinjer
+        /**
+        * Husk mellomrom over kommentarblokk
+        *
+        *
+        */
+        
+        object.Method();        // Slik kommenterer man enkeltlinjer
     }
 </pre>
