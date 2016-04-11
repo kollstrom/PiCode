@@ -27,19 +27,29 @@ class TCPServer implements Runnable{
 
 
             ServerSocket welcomeSocket = new ServerSocket(6789);
+            while (true){
 
-            System.out.println("Waiting for connection");
-            Socket connectionSocket = welcomeSocket.accept();
-            System.out.println("Client Connected");
-            this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                Socket connectionSocket = welcomeSocket.accept();
+                this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                this.outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
-            String clientString = inFromClient.readLine();
-            JSONObject clientJSON = stringToJSON(clientString);
-            parseJSON(clientJSON);
+                String clientString = inFromClient.readLine();
+                JSONObject clientJSON = stringToJSON(clientString);
+
+                System.out.println(clientJSON);
+
+                parseJSON(clientJSON);
+
+
+            }
+
+
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Someting wong");
         }
         catch (Exception e){
-            System.out.println("Someting wong");
+            System.out.println("Trouble with Json");
         }
     }
 
@@ -61,6 +71,10 @@ class TCPServer implements Runnable{
             case "login":
                 break;
 
+            case "check":
+                this.requestCheck(payload);
+                break;
+
             default:
                 throw new Exception("Default thrown");
         }
@@ -68,22 +82,22 @@ class TCPServer implements Runnable{
 
     public void requestSave(JSONObject payload){
         JSONObject profile = controller.getCarSettingsAsJSON();
-        JSONObject reply = new JSONObject();
         try{
-            reply.put("request", "save");
-            reply.put("profile", profile.toString());
-            this.outToClient.writeBytes(reply.toString() + "\n");
-            System.out.println("Wrote profile to client");
+            writeResponse(stringToJSON(profile.toString()));
         } catch (Exception e) {
-            System.out.println("Couldt reply with profile");
+            System.out.println("Couldn't reply with profile");
 
         }
     }
 
+
+
     public void requestExecute(JSONObject payload){
         try{
-            System.out.println("Executing");
             controller.setCarSettingsFromJSON(payload.get("profile").toString());
+            JSONObject reply = new JSONObject();
+            reply.put("message", "Profile executed");
+            writeResponse(reply);
         }
         catch (Exception e){
             System.out.println("\"profile\" ekisterer ikke i pakken");
@@ -91,8 +105,28 @@ class TCPServer implements Runnable{
 
     }
 
+    public void requestCheck(JSONObject payload){
+        double promilledouble = controller.alcoholMeasurement();
+        String promille = String.valueOf(promilledouble);
+        try{
+            JSONObject reply = new JSONObject();
+            reply.put("message", promille);
+            writeResponse(reply);
+        }
+        catch(Exception e){
+            System.out.println("Wong with alcohol JSON" + "/n");
+
+        }
+    }
+
+
     public JSONObject stringToJSON(String inputString) throws Exception{
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(inputString);
+    }
+
+    public void writeResponse(JSONObject reply) throws Exception {
+        this.outToClient.writeBytes(reply.toString() + "\n");
+        System.out.println("Wrote response: " + reply.toString());
     }
 }

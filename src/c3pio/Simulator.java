@@ -64,8 +64,7 @@ public class Simulator {
 
             }
             else if(in.equals("check")){
-                print("Your Blood Alcohol Concentration is : ");
-                print(alcoholMeasurement());
+                alcoholMeasurement(); // change to controller.alcoholMeasrement();
             }
             else if(in.equals("change")){
                 // Method that lists all setting-numbers and enters new menu
@@ -336,12 +335,13 @@ public class Simulator {
     }
 
     public static double alcoholMeasurement(){
+        System.out.println("Your Blood Alcohol Concentration is : ");
         double permille = -1.0;
         try {
 
             // run the Unix "ps -ef" command
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("python /home/pi/Documents/PiCode/PiCode/pythonscripts/arduinoReader.py");
+            Process p = Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/arduinoReader.py");
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -372,6 +372,7 @@ public class Simulator {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println(permille);
         return permille;
     }
 
@@ -383,7 +384,7 @@ public class Simulator {
                 highest = alcoholValue;
             }
         }
-        return highest/1000;
+        return highest/10000;
     }
 
     private static int parseToDouble(String s) {
