@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,6 +21,16 @@ public class Simulator {
     private static BufferedReader input;
     private static PrintStream ps;
 
+    /*
+     * Sumulator contructor that takes in a controller- and a carsettingsobject
+     * and assigns them to its local variables.
+     *
+     * It also tries to start the connection with the car/EV3, if it fails to
+     * do so, the stackTrace is printed.
+     *
+     * In the end, the local run() method is called.
+     */
+
     public Simulator(Controller controller, CarSettings carSettings) {
         this.controller = controller;
         this.carSettings = carSettings;
@@ -30,20 +41,30 @@ public class Simulator {
             this.ps = new PrintStream(clientSocket.getOutputStream());
         }
         catch (IOException e){
-            e.printStackTrace();
+            print("Couldn't connect to legoCar.");
         }
         this.run();
 
     }
 
+    /*
+     * This method prints out what ever it gets as parameter.
+     */
+
     public static void print(Object o){
         System.out.println(o);
     }
 
+    /*
+     * The run() method a simple input based program that reacts different
+     * on specific user-based input.
+     */
+
     public void run() {
-        // System.out.println(carSettings);
 
         Scanner scanner = new Scanner(System.in);
+
+        //This String contains all the commands recognized by the run() method.
         String help = "\nType: \n" +
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
@@ -56,11 +77,16 @@ public class Simulator {
             print(help);
             String in = scanner.nextLine();
             if (in.equals("")){
+
+                /*In case the input is empty/enter, which also happens when you
+                 * write something to the scanner and press then 'enter', you get
+                 * another chance to write a command.
+                 */
                 in = scanner.nextLine();
             }
             if(in.equals("settings")){
                 print(carSettings);
-            }
+            }/*
             else if(in.equals("BT") || in.equals("bt") || in.equals("Bt") || in.equals("bT")){
                 JSONParser parser = new JSONParser();
                 try{
@@ -77,20 +103,26 @@ public class Simulator {
                     System.out.println(e);
                 }
 
-            }
+            }*/
             else if(in.equals("check")){
+
+                /*
+                 * Calls the method that measures your alcohol-level and prints the result.
+                 */
                 print("Your Blood Alcohol Concentration is : ");
                 print(alcoholMeasurement());
             }
             else if(in.equals("change")){
-                // Method that lists all setting-numbers and enters new menu
-                // that allows you to choose what to change and enter input
+
+                /*
+                 * Method that lists all setting-numbers and enters new menu
+                 * that allows you to choose what to change and enter input.
+                 */
                 print(carSettings.toString()+ "\n");
                 print("Type 0 to change all settings. \nType 1-14 to change one setting at a time.");
                 String change = scanner.nextLine();
                 switch (change){
                     case "0":
-                        changeIgnitionType(carSettings, scanner);
                         changeSteeringWheelTilt(carSettings, scanner);
                         changeSteeringWheelDepth(carSettings, scanner);
                         changeRadioStation(carSettings, scanner);
@@ -106,45 +138,42 @@ public class Simulator {
                         changeTemperature(carSettings, scanner);
                         break;
                     case "1":
-                        changeIgnitionType(carSettings, scanner);
-                        break;
-                    case "2":
                         changeSteeringWheelTilt(carSettings, scanner);
                         break;
-                    case "3":
+                    case "2":
                         changeSteeringWheelDepth(carSettings, scanner);
                         break;
-                    case "4":
+                    case "3":
                         changeRadioStation(carSettings, scanner);
                         break;
-                    case "5":
+                    case "4":
                         changeWingMirrorLeftX(carSettings, scanner);
                         break;
-                    case "6":
+                    case "5":
                         changeWingMirrorLeftY(carSettings, scanner);
                         break;
-                    case "7":
+                    case "6":
                         changeWingMirrorRightX(carSettings, scanner);
                         break;
-                    case "8":
+                    case "7":
                         changeWingMirrorRightY(carSettings, scanner);
                         break;
-                    case "9":
+                    case "8":
                         changeSeatHeight(carSettings, scanner);
                         break;
-                    case "10":
+                    case "9":
                         changeSeatDepth(carSettings, scanner);
                         break;
-                    case "11":
+                    case "10":
                         changeSeatBackAngle(carSettings, scanner);
                         break;
-                    case "12":
+                    case "11":
                         changeSeatHeadAngle(carSettings, scanner);
                         break;
-                    case "13":
+                    case "12":
                         changeSeatBackDepth(carSettings, scanner);
                         break;
-                    case "14":
+                    case "13":
                         changeTemperature(carSettings, scanner);
                         break;
                     default:
@@ -153,6 +182,11 @@ public class Simulator {
                 }
             }
             else if(in.equals("quit")){
+
+                /*
+                 * A quit command is send to the car/EV3 that tells it to shut down/end the
+                 * program and the simulator program ends.
+                 */
                 ps.print("quit");
                 System.out.println("Ending program...");
                 break;
@@ -169,10 +203,15 @@ public class Simulator {
         }
     }
 
+    /*
+     * Changes current Temperature in the Car. Not implemented in the legoCar.
+     */
     private static void changeTemperature(CarSettings c, Scanner scanner) {
+
         print("Choose a value between 15 and 25 to change temperature: ");
         int tem = scanner.nextInt();
-        while(tem < 15 || tem > 25){
+
+        while(tem < 15 || tem > 25){ //accepted temperatures in °C
             print("Number must be between 15 and 25 \n");
             tem = scanner.nextInt();
         }
@@ -180,11 +219,15 @@ public class Simulator {
         print("Temperature was changed to " + tem);
     }
 
+    /*
+     * Changes the current seatBackDepth. Not implemented in the legoCar.
+     */
     private static void changeSeatBackDepth(CarSettings c, Scanner scanner) {
-        //not implemented in the legoCar
+
         print("Choose a value between 0 and 10 to change seat back depth: ");
         int sbd = scanner.nextInt();
-        while(sbd < 0 || sbd > 10){
+
+        while(sbd < 0 || sbd > 10){ //accepted angle values
             print("Number must be between 0 and 10 \n");
             sbd = scanner.nextInt();
         }
@@ -192,11 +235,15 @@ public class Simulator {
         print("Seat back depth was changed to " + sbd);
     }
 
+    /*
+     * Changes the current seatHeadAngle. Not implemented in the legoCar.
+     */
     private static void changeSeatHeadAngle(CarSettings c, Scanner scanner) {
-        //not implemented in the legoCar
+
         print("Choose a value between -90 and 90 to change seat head angle: ");
         int sha = scanner.nextInt();
-        while(sha < -90 || sha > 90){
+
+        while(sha < -90 || sha > 90){ //accepted angle values
             print("Number must be between -90 and 90 \n");
             sha = scanner.nextInt();
         }
@@ -204,213 +251,232 @@ public class Simulator {
         print("Seat head angle was changed to " + sha);
     }
 
+    /*
+     * Changes the current seatBackAngle. Implemented in the legoCar.
+     */
     private static void changeSeatBackAngle(CarSettings c, Scanner scanner) {
-        ps.println("seatBackAngle");
-        print("Choose a value between -90 and 90 to change seat back angle: ");
+
+        ps.println("seatBackAngle"); //Tells the legoCar what the user want to change.
+        print("Choose a value between -90 and 45 to change seat back angle: ");
         int sba = scanner.nextInt();
-        while(sba < -90 || sba > 90){
-            print("Number must be between -90 and 90 \n");
+
+        while(sba < -90 || sba > 45){ //accepted angle values
+            print("Number must be between -90 and 45 \n");
             sba = scanner.nextInt();
         }
         c.setSeatBackAngle(sba);
-        ps.println(sba);
+        ps.println(sba); //Tells the legoCar what angle to change to.
         print("Seat back angle was changed to " + sba);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current seatBackDepth. Implemented in the legoCar.
+     */
     private static void changeSeatDepth(CarSettings c, Scanner scanner) {
-        ps.println("seatDepth");
+
+        ps.println("seatDepth"); //Tells the legoCar what the user want to change.
         print("Choose a value between 0 and 10 to change seat depth: ");
         int sd = scanner.nextInt();
-        while(sd < 0 || sd > 10){
+
+        while(sd < 0 || sd > 10){ //accepted angle values
             print("Number must be between 0 and 10 \n");
             sd = scanner.nextInt();
         }
         c.setSeatDepth(sd);
-        ps.println(sd);
+        ps.println(sd); //Tells the legoCar what angle to change to.
         print("Seat depth was changed to " + sd);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current seatBackHeight. Implemented in the legoCar.
+     */
     private static void changeSeatHeight(CarSettings c, Scanner scanner) {
-        ps.println("seatHeight");
+
         print("Choose a value between 0 and 10 to change seat height");
         int sh = scanner.nextInt();
-        while(sh < 0 || sh > 10){
+
+        while(sh < 0 || sh > 10){ //accepted angle values
             print("Number must be between 0 and 10 \n");
             sh = scanner.nextInt();
         }
         c.setSeatHeight(sh);
-        ps.println(sh);
         print("Seat height was changed to " + sh);
-        waitForMotors();
     }
 
+    /*
+     * Changes the current WingMirrorRightY. Implemented in the legoCar.
+     */
     private static void changeWingMirrorRightY(CarSettings c, Scanner scanner) {
-        ps.println("wingMirrorRightY");
+
+        ps.println("wingMirrorRightY"); //Tells the legoCar what the user want to change.
         print("Choose a value between -25 and 25 to change wing mirror right y-axis: ");
         int wmry = scanner.nextInt();
-        while(wmry < -25 || wmry > 25){
+
+        while(wmry < -25 || wmry > 25){ //accepted angle values
             print("Number must be between -25 and 25 \n");
             wmry = scanner.nextInt();
         }
         c.setWingMirrorRightY(wmry);
-        ps.println(wmry);
+        ps.println(wmry); //Tells the legoCar what angle to change to.
         print("Wing mirror right y-axis was changed to " + wmry);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current WingMirrorRightX. Implemented in the legoCar.
+     */
     private static void changeWingMirrorRightX(CarSettings c, Scanner scanner) {
-        ps.println("wingMirrorRightX");
+
+        ps.println("wingMirrorRightX"); //Tells the legoCar what the user want to change.
         print("Choose a value between -25 and 25 to change wing mirror right x-axis: ");
         int wmrx = scanner.nextInt();
-        while(wmrx < -25 || wmrx > 25){
+
+        while(wmrx < -25 || wmrx > 25){ //accepted angle values
             print("Number must be between -25 and 25 \n");
             wmrx = scanner.nextInt();
         }
         c.setWingMirrorRightX(wmrx);
-        ps.println(wmrx);
+        ps.println(wmrx); //Tells the legoCar what angle to change to.
         print("Wing mirror right x-axis was changed to " + wmrx);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current WingMirrorLeftY. Implemented in the legoCar.
+     */
     private static void changeWingMirrorLeftY(CarSettings c, Scanner scanner) {
-        ps.println("wingMirrorLeftY");
+
+        ps.println("wingMirrorLeftY"); //Tells the legoCar what the user want to change.
         print("Choose a value between -25 and 25 to change wing mirror left y-axis: ");
         int wmly = scanner.nextInt();
-        while(wmly < -25 || wmly > 25){
+
+        while(wmly < -25 || wmly > 25){ //accepted angle values
             print("Number must be between -25 and 25 \n");
             wmly = scanner.nextInt();
         }
         c.setWingMirrorLeftY(wmly);
-        ps.println(wmly);
+        ps.println(wmly); //Tells the legoCar what angle to change to.
         print("Wing mirror left y-axis was changed to " + wmly);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current WingMirrorLeftX. Implemented in the legoCar.
+     */
     private static void changeWingMirrorLeftX(CarSettings c, Scanner scanner) {
-        ps.println("windMirrorLeftX");
+
+        ps.println("windMirrorLeftX"); //Tells the legoCar what the user want to change.
         print("Choose a value between -25 and 25 to change wing mirror left x-axis: ");
         int wmlx = scanner.nextInt();
-        while(wmlx < -25 || wmlx > 25){
+
+        while(wmlx < -25 || wmlx > 25){ //accepted angle values
             print("Number must be between -25 and 25 \n");
             wmlx = scanner.nextInt();
         }
         c.setWingMirrorLeftX(wmlx);
-        ps.println(wmlx);
+        ps.println(wmlx); //Tells the legoCar what angle to change to.
         print("Wing mirror left x-axis was changed to " + wmlx);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current RadioStation. Implemented in the legoCar.
+     */
     private static void changeRadioStation(CarSettings c, Scanner scanner) {
-        ps.println("radioStation");
+
+        ps.println("radioStation"); //Tells the legoCar what the user want to change.
         print("Choose a radio station: ");
         String radioStation = scanner.nextLine();
-        if(radioStation.equals("")){
+        if(radioStation.equals("")){ //In case the 'enter' you press to come here is used as input
             radioStation = scanner.nextLine();
         }
-        while(radioStation.equals("")){
+        while(radioStation.equals("")){ //In case you pressed 'enter' instead of typing in a radioStation
             print("Radio station cannot be empty \n");
             radioStation = scanner.nextLine();
         }
         c.setRadioStation(radioStation);
-        ps.println(radioStation);
+        ps.println(radioStation); //Tells the legoCar what radioStation to change to.
         print("Radio station has been changed to " + radioStation);
     }
 
+    /*
+     * Changes the current SteeringWheelDepth. Implemented in the legoCar.
+     */
     private static void changeSteeringWheelDepth(CarSettings c, Scanner scanner) {
-        ps.println("steeringWheelDepth");
+
+        ps.println("steeringWheelDepth"); //Tells the legoCar what the user want to change.
         print("Choose a value between 0 and 10 to change steering wheel depth: ");
         int swd = scanner.nextInt();
-        while(swd < 0 || swd > 10){
+
+        while(swd < 0 || swd > 10){ //accepted angle values
             print("Number must be between 0 and 10 \n");
             swd = scanner.nextInt();
         }
         c.setSteeringWheelDepth(swd);
-        ps.println(swd);
+        ps.println(swd); //Tells the legoCar what angle to change to.
         print("Steering wheel depth was changed to " + swd);
-        waitForMotors();
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
+    /*
+     * Changes the current SteeringWheelTilt. Implemented in the legoCar.
+     */
     private static void changeSteeringWheelTilt(CarSettings c, Scanner scanner) {
-        ps.println("steeringWheelTilt");
+
+        ps.println("steeringWheelTilt"); //Tells the legoCar what the user want to change.
         print("Choose a value between 0 and 90 to change steering wheel tilt: ");
         int swt = scanner.nextInt();
-        while(swt < 0 || swt > 90){
+
+        while(swt < 0 || swt > 90){ //accepted angle values
             print("Number must be between 0 and 90 \n");
             swt = scanner.nextInt();
         }
         c.setSteeringWheelTilt(swt);
-        ps.println(swt);
+        ps.println(swt); //Tells the legoCar what angle to change to.
         print("Steering wheel tilt was changed to " + swt);
-        waitForMotors();
-    }
-
-    private static void changeIgnitionType(CarSettings c, Scanner scanner) {
-        print("To change select one of the ignition types type: \n");
-        String ignitionTypes = "\noff - for OFF \n" +
-                "start - for START \n" +
-                "accessory - for ACCESSORY \n" +
-                "run - for RUN \n";
-        print(ignitionTypes);
-        String ignitionTypeString = scanner.nextLine();
-
-        while(!ignitionTypeString.equals("off") && !ignitionTypeString.equals("start")
-                && !ignitionTypeString.equals("run") && !ignitionTypeString.equals("accessory")){
-            print(ignitionTypeString+ " wasn't recognized as a command. \n");
-            print(ignitionTypes);
-            ignitionTypeString = scanner.nextLine();
-        }
-
-        convertToIgnitionType(c, ignitionTypeString);
-    }
-
-    private static void convertToIgnitionType(CarSettings c, String ignitionTypeString) {
-        if(ignitionTypeString.toLowerCase().equals("off")){
-            c.setIgnitionStatus(CarSettings.IgnitionStatusType.OFF);
-            print("Ignition status was changed to off");
-        }
-        else if(ignitionTypeString.toLowerCase().equals("start")){
-            c.setIgnitionStatus(CarSettings.IgnitionStatusType.START);
-            print("Ignition status was changed to start");
-        }
-        else if(ignitionTypeString.toLowerCase().equals("accessory")){
-            c.setIgnitionStatus(CarSettings.IgnitionStatusType.ACCESSORY);
-            print("Ignition status was changed to accessory");
-        }
-        else if(ignitionTypeString.toLowerCase().equals("run")){
-            c.setIgnitionStatus(CarSettings.IgnitionStatusType.RUN);
-            print("Ignition status was changed to run");
-        }
+        waitForMotors(); //Calls a method that gives the motors time to change the angles.
     }
 
     public static double alcoholMeasurement(){
-        double permille = -1.0;
+        double permille = -1.0; // In case the measurement fails, the value stays -1.0 to signalize
+                                // that there is a problem with the readings/sensor/...
         try {
-
-            // run the Unix "ps -ef" command
-            // using the Runtime exec method:
+            /*
+             * run the Unix "ps -ef" command///////////////////////////////////////////////////////
+             * using the Runtime exec method///////////////////////////////////////////////////////
+             *
+             *  EEEEEE  MM      MM  II LL      !! !! !!
+             *  EE      MMMM  MMMM  II LL      !! !! !!
+             *  EEEEE   MM  MM  MM  II LL      !! !! !!
+             *  EE      MM      MM  II LL
+             *  EEEEEE  MM      MM  II LLLLLLL !! !! !!
+             */
             Process p = Runtime.getRuntime().exec("python /home/pi/Documents/PiCode/PiCode/pythonscripts/arduinoReader.py");
 
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-
             // read the output from the command
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             long startTime = System.currentTimeMillis();
             String s = null;
+
+            /*
+             * An Array where the values, read from Arduino, are saved in the meantime.
+             */
             ArrayList<String> alcoholValues = new ArrayList<>();
 
             while(false||(System.currentTimeMillis()-startTime)<10000){
-                s = stdInput.readLine();
-                if (s != null && !s.equals("") && !s.equals(", ") && !s.equals(" ") && !s.equals(",")) {
+                s = stdInput.readLine(); //read the values from Arduino
+
+                //The readings aren't error free, so invalid readings are sorted out.
+                if (s != null && !s.equals("") && ! s.equals(", ") && ! s.equals(" ") && ! s.equals(",")) {
                     alcoholValues.add(s);
 
-                    Thread.sleep(1);
+                    Thread.sleep(1); //very small break to reduce the amount of readings collected.
                 }
-
             }
+            //Gets the highest + converted alcoholValue from the Array
             permille = calculatePermille(alcoholValues);
         }
         catch (IOException e) {
@@ -424,10 +490,14 @@ public class Simulator {
         return permille;
     }
 
-    private static double calculatePermille(ArrayList<String> s) {
+    /*
+     * Converts the values from the AlcoholSensor to an actual alcohol value and returns
+     * the the highest measurement.
+     */
+    public static double calculatePermille(ArrayList<String> s) {
         double highest = 0.0;
         for (String value : s) {
-            int alcoholValue = parseToDouble(value);
+            int alcoholValue = parseToInt(value);
             if (alcoholValue > highest) {
                 highest = alcoholValue;
             }
@@ -435,21 +505,23 @@ public class Simulator {
         return highest/1000;
     }
 
-    private static int parseToDouble(String s) {
+    /*
+     * Takes a String (its parameter) and converts it to an Integer. The result is returned.
+     * If the result is invalid -1 is returned.
+     */
+    public static int parseToInt(String s) {
 
         int result = Integer.parseInt(s.replaceAll("[\\D]", ""));
-
-/*
-
-	s = s.replaceAll("[^-?0-9]+", " ");
-	ArrayList<String> sList = Arrays.asList(str.trim().split(" "));
-*/
         if(result > 999){
             return -1;
         }
         return result;
     }
 
+    /*
+     * This method stops the simulator code for 2 seconds each times its called, to give motors time to
+     * reach the given angles.
+     */
     private static void waitForMotors() {
         try{
             TimeUnit.SECONDS.sleep(2);
@@ -458,5 +530,4 @@ public class Simulator {
             e.printStackTrace();
         }
     }
-
 }
