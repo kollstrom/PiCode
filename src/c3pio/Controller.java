@@ -14,10 +14,15 @@ public class Controller {
     private TCPServer server;
 
     public Controller() {
+
+        /**
+         * Initializes all the other classes that runs on the raspberry pi.
+         * Since the server is threaded (runs in the background), it's started first.
+         */
+
         this.server = new TCPServer(this);
         this.carSettings = new CarSettings();
         this.simulator = new Simulator(this, this.carSettings);
-
     }
 
     public JSONObject stringToJSON(String inputString) throws Exception{
@@ -27,6 +32,9 @@ public class Controller {
 
     public void setCarSettingsFromJSON(String profileAsJSON){
 
+        /**
+         * Writes the given JSONstring to the car, with loads of exceptions if something is missing
+         */
 
         try{
            JSONObject JSONObject = stringToJSON(profileAsJSON);
@@ -107,52 +115,31 @@ public class Controller {
                 System.out.println("13 temperature");
             }
 
-
-
-
             System.out.println("Successfully read from app.");
             System.out.println(carSettings);
-
-
         }
         catch (Exception e){
-            System.out.println("Someting wang with recieved JSON");
+            System.out.println("Couldn't convert received string to JSON in setCarSettingsFromJSON");
         }
-
-
     }
 
     public double alcoholMeasurement(){
+        /**
+         * Used by the server to give the alcohol reading to the client.
+         */
 
         return Simulator.alcoholMeasurement();
     }
 
-
-    public static void main(String[] args){
-        Controller c = new Controller();
-    }
-
-    private static CarSettings.IgnitionStatusType getIgnitionStatusTypeFromString(String ignitionTypeString) {
-        if(ignitionTypeString.toLowerCase().equals("off")){
-            return CarSettings.IgnitionStatusType.OFF;
-        }
-        else if(ignitionTypeString.toLowerCase().equals("start")){
-            return CarSettings.IgnitionStatusType.START;
-        }
-        else if(ignitionTypeString.toLowerCase().equals("accessory")){
-            return CarSettings.IgnitionStatusType.ACCESSORY;
-        }
-        else if(ignitionTypeString.toLowerCase().equals("run")){
-            return CarSettings.IgnitionStatusType.RUN;
-        }
-        return CarSettings.IgnitionStatusType.OFF;
-    }
-
     @SuppressWarnings("unchecked")
     public JSONObject getCarSettingsAsJSON(){
+
+        /**
+         * Reads the cars current settings and returns it as a JSONObject
+         */
+
         JSONObject j = new JSONObject();
 
-        j.put("ignition_status",carSettings.getIgnitionStatus().toString());
         j.put("steering_wheel_tilt",carSettings.getSteeringWheelTilt());
         j.put("steering_wheel_depth",carSettings.getSteeringWheelDepth());
         j.put("radio_station", carSettings.getRadioStation());
@@ -169,5 +156,9 @@ public class Controller {
         j.put("timestamp", new Date().getTime());
 
         return j;
+    }
+
+    public static void main(String[] args){
+        Controller c = new Controller();
     }
 }
