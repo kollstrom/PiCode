@@ -46,8 +46,7 @@ public class CarSettings {
         }
         this.steeringWheelTilt = steeringWheelTilt;
     }
-
-
+    
     public int getSteeringWheelDepth() {
         return steeringWheelDepth;
     }

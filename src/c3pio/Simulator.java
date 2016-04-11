@@ -67,7 +67,6 @@ public class Simulator {
                     Object obj = parser.parse(new FileReader("/home/pi/Documents/PiCode/PiCode/src/data/username.json"));
                     JSONArray array = (JSONArray)obj;
                     controller.setCarSettingsFromJSON(array.toString());
-
                 }
                 catch (FileNotFoundException e){
                     System.err.println("File not found.");

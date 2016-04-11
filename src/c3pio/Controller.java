@@ -40,7 +40,6 @@ public class Controller {
             carSettings.setTemperature(Integer.parseInt(JSONObject.get("temperature").toString()));
 
             System.out.println("Successfully read from app.");
-
         }
         catch (Exception e){
             System.out.print(e.getMessage());
