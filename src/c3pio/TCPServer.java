@@ -32,6 +32,7 @@ class TCPServer implements Runnable{
 
 
             ServerSocket welcomeSocket = new ServerSocket(6789);
+            System.out.println("Waiting for connection...");
             while (true){
                 Socket connectionSocket = welcomeSocket.accept();
                 this.inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -42,10 +43,10 @@ class TCPServer implements Runnable{
                 parseJSON(clientJSON);
             }
         }
-
         catch (Exception e){
             System.out.println("Couldn't convert client string to JSON");
         }
+
     }
 
     public void parseJSON(JSONObject payload) throws Exception{

@@ -39,14 +39,6 @@ public class TCPServerTest extends TestCase {
         }
     }
 
-    public void testWriteResponse() throws Exception {
-        try {
-            JSONObject reply = new JSONObject();
-            server.writeResponse(reply);
-        }
-        catch (Exception e) {
 
-        }
-    }
 
 }
