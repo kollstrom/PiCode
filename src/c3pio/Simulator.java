@@ -482,13 +482,18 @@ public class Simulator {
     }
 
     /*
-     * Takes a String (its parameter) and converts it to an Integer. The result is returned.
+     * Takes a String (its parameter) and converts it to an integer. The result is returned.
      * If the result is invalid -1 is returned.
      */
     public static int parseToInt(String s) {
+        int result = -1;
+        try{
+            result = Integer.parseInt(s.replaceAll("[\\D]", ""));
+        }
+        catch (Exception e){
 
-        int result = Integer.parseInt(s.replaceAll("[\\D]", ""));
-        if(result > 999){
+        }
+        if((result > 999) || result < 0){
             return -1;
         }
         return result;
