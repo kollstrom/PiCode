@@ -47,7 +47,7 @@ public class TCPServerTest{
             JSONObject reply = new JSONObject();
             server.writeResponse(reply);
         } catch (Exception e) {
-            // TODO: Ingenting blir testet her!
+            assertEquals("Can't write to client",e.getMessage());
         }
     }
 

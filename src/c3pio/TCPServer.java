@@ -147,8 +147,13 @@ class TCPServer implements Runnable{
         return (JSONObject) parser.parse(inputString);
     }
 
-    public void writeResponse(JSONObject reply) throws Exception {
-        this.outToClient.writeBytes(reply.toString() + "\n");
-        System.out.println("Wrote response: " + reply.toString());
+    public void writeResponse(JSONObject reply) throws Exception{
+        try{
+            this.outToClient.writeBytes(reply.toString() + "\n");
+            System.out.println("Wrote response: " + reply.toString());
+        }
+        catch (Exception e){
+            throw new Exception("Can't write to client");
+        }
     }
 }
