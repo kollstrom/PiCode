@@ -11,7 +11,7 @@ diff = d.compare(before, after)
 plusdiff = "".join(diff)
 plus_start_index = plusdiff.find('+')
 plus_end_index = plusdiff.rfind('+') + 3
-new_port = plusdiff[plus_start_index:plus_end_index].strip('+').strip(' ')
-
+new_port = plusdiff[plus_start_index:plus_end_index].replace('+', '').replace(' ', '')
+file.write(new_port)
 print(new_port)
 file.close()
