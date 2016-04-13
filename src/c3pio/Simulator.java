@@ -1,11 +1,6 @@
 package c3pio;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import java.io.*;
-import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,12 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Simulator {
 
-    private JSONObject JSON = new JSONObject();
     private Controller controller;
     private CarSettings carSettings;
 
     private Socket clientSocket;
-    private static BufferedReader input;
     private static PrintStream ps;
 
     /*
@@ -31,13 +24,13 @@ public class Simulator {
      * In the end, the local run() method is called.
      */
 
-    public Simulator(Controller controller, CarSettings carSettings) {
-        this.controller = controller;
+    public Simulator(Controller c, CarSettings carSettings) {
+        Controller controller = c;
         this.carSettings = carSettings;
 
         try {
             this.clientSocket = new Socket("10.0.1.1", 4321);
-            this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             this.ps = new PrintStream(clientSocket.getOutputStream());
         }
         catch (IOException e){
@@ -48,7 +41,7 @@ public class Simulator {
     }
 
     /*
-     * This method prints out what ever it gets as parameter.
+     * This method prints out whatever it gets as parameter.
      */
 
     public static void print(Object o){
@@ -56,7 +49,7 @@ public class Simulator {
     }
 
     /*
-     * The run() method a simple input based program that reacts different
+     * The run() method is a simple input based program that reacts different
      * on specific user-based input.
      */
 
@@ -68,7 +61,6 @@ public class Simulator {
         String help = "\nType: \n" +
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
-                "BT - to read from app via bluetooth \n" +
                 "check - to check your alcoholconsentration \n" +
                 "quit - to quit program\n \n";
 
@@ -86,24 +78,7 @@ public class Simulator {
             }
             if(in.equals("settings")){
                 print(carSettings);
-            }/*
-            else if(in.equals("BT") || in.equals("bt") || in.equals("Bt") || in.equals("bT")){
-                JSONParser parser = new JSONParser();
-                try{
-                    Object obj = parser.parse(new FileReader("/home/pi/Documents/PiCode/PiCode/src/data/username.json"));
-                    JSONArray array = (JSONArray)obj;
-                    controller.setCarSettingsFromJSON(array.toString());
-                }
-                catch (FileNotFoundException e){
-                    System.err.println("File not found.");
-                }
-
-                catch (Exception e){
-                    System.err.println("An error has occured!");
-                    System.out.println(e);
-                }
-
-            }*/
+            }
             else if(in.equals("check")){
 
                 /*
@@ -459,14 +434,14 @@ public class Simulator {
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             long startTime = System.currentTimeMillis();
-            String s = null;
+            String s;
 
             /*
              * An Array where the values, read from Arduino, are saved in the meantime.
              */
             ArrayList<String> alcoholValues = new ArrayList<>();
 
-            while(false||(System.currentTimeMillis()-startTime)<10000){
+            while((System.currentTimeMillis()-startTime)<10000){
                 s = stdInput.readLine(); //read the values from Arduino
 
                 //The readings aren't error free, so invalid readings are sorted out.
@@ -487,6 +462,7 @@ public class Simulator {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println(permille);
         return permille;
     }
 
@@ -502,7 +478,7 @@ public class Simulator {
                 highest = alcoholValue;
             }
         }
-        return highest/1000;
+        return highest/10000;
     }
 
     /*

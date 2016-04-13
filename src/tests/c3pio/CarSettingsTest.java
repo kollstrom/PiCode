@@ -1,6 +1,5 @@
 package c3pio;
-import c3pio.CarSettings;
-import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -340,9 +339,4 @@ public class CarSettingsTest {
         }
     }
 
-    @Test
-    public void testSetIgnitionStatus() throws Exception {
-        car.setIgnitionStatus(CarSettings.IgnitionStatusType.ACCESSORY);
-        assertEquals(CarSettings.IgnitionStatusType.ACCESSORY, car.getIgnitionStatus());
-    }
 }
