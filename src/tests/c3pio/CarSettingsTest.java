@@ -1,6 +1,5 @@
 package c3pio;
-import c3pio.CarSettings;
-import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -244,13 +243,13 @@ public class CarSettingsTest {
 
     @Test
     public void testSetSeatBackAngle() throws Exception {
-        car.setSeatBackAngle(90);
-        assertEquals(90, car.getSeatBackAngle());
+        car.setSeatBackAngle(45);
+        assertEquals(45, car.getSeatBackAngle());
     }
     @Test
     public void testThrowExceptionIfSeatBackAngleIsOVer90(){
         try{
-            car.setSeatBackAngle(91);
+            car.setSeatBackAngle(46);
             fail("IllegalArgumentException expected: values cannot be over 90");
         }
         catch(IllegalArgumentException iae){
@@ -340,9 +339,4 @@ public class CarSettingsTest {
         }
     }
 
-    @Test
-    public void testSetIgnitionStatus() throws Exception {
-        car.setIgnitionStatus(CarSettings.IgnitionStatusType.ACCESSORY);
-        assertEquals(CarSettings.IgnitionStatusType.ACCESSORY, car.getIgnitionStatus());
-    }
 }

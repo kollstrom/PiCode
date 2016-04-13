@@ -1,17 +1,12 @@
 package c3pio;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import org.json.simple.parser.JSONParser;
-
-import java.io.StringWriter;
 import java.util.Date;
 
 public class Controller {
+
     private CarSettings carSettings;
-    private Simulator simulator;
-    private TCPServer server;
 
     public Controller() {
 
@@ -20,9 +15,9 @@ public class Controller {
          * Since the server is threaded (runs in the background), it's started first.
          */
 
-        this.server = new TCPServer(this);
+        TCPServer server = new TCPServer(this);
         this.carSettings = new CarSettings();
-        this.simulator = new Simulator(this, this.carSettings);
+        Simulator simulator = new Simulator(this, this.carSettings);
     }
 
     public JSONObject stringToJSON(String inputString) throws Exception{

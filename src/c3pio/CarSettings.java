@@ -2,7 +2,6 @@ package c3pio;
 
 public class CarSettings {
 
-    private IgnitionStatusType ignitionStatus;
     private int steeringWheelTilt;
     private int steeringWheelDepth;
     private String radioStation;
@@ -18,18 +17,9 @@ public class CarSettings {
     private int temperature;
 
     public CarSettings() {
-        setIgnitionStatus(IgnitionStatusType.OFF);
         setRadioStation("NrkP3");
         setTemperature(15);
 
-    }
-
-    public IgnitionStatusType getIgnitionStatus() {
-        return ignitionStatus;
-    }
-
-    public void setIgnitionStatus(IgnitionStatusType ignitionStatus) {
-        this.ignitionStatus = ignitionStatus;
     }
 
     public enum IgnitionStatusType{
@@ -46,8 +36,7 @@ public class CarSettings {
         }
         this.steeringWheelTilt = steeringWheelTilt;
     }
-
-
+    
     public int getSteeringWheelDepth() {
         return steeringWheelDepth;
     }
@@ -141,8 +130,8 @@ public class CarSettings {
     }
 
     public void setSeatBackAngle(int seatBackAngle) {
-        if (seatBackAngle < -90 || seatBackAngle > 90){
-            throw new IllegalArgumentException("Number must be between -90 and 90");
+        if (seatBackAngle < -90 || seatBackAngle > 45){
+            throw new IllegalArgumentException("Number must be between -90 and 45");
         }
         this.seatBackAngle = seatBackAngle;
     }
@@ -183,19 +172,18 @@ public class CarSettings {
     @Override
     public String toString() {
         return "CarSettings:" + "\n" + "\t" +
-                " 1. ignitionStatus = " + ignitionStatus + "\n" + "\t" +
-                " 2. steeringWheelTilt = " + steeringWheelTilt + "\n" + "\t" +
-                " 3. steeringWheelDepth = " + steeringWheelDepth + "\n" + "\t" +
-                " 4. radioStation = '" + radioStation + '\'' + "\n" + "\t" +
-                " 5. wingMirrorLeftX = " + wingMirrorLeftX + "\n" + "\t" +
-                " 6. wingMirrorLeftY = " + wingMirrorLeftY + "\n" + "\t" +
-                " 7. wingMirrorRightX = " + wingMirrorRightX + "\n" + "\t" +
-                " 8. wingMirrorRightY = " + wingMirrorRightY + "\n" + "\t" +
-                " 9. seatHeight = " + seatHeight + "\n" + "\t" +
-                "10. seatDepth = " + seatDepth + "\n" + "\t" +
-                "11. seatBackAngle = " + seatBackAngle + "\n" + "\t" +
-                "12. seatHeadAngle = " + seatHeadAngle + "\n" + "\t" +
-                "13. seatBackDepth = " + seatBackDepth + "\n" + "\t" +
-                "14. temperature = " + temperature;
+                " 1. steeringWheelTilt = " + steeringWheelTilt + "\n" + "\t" +
+                " 2. steeringWheelDepth = " + steeringWheelDepth + "\n" + "\t" +
+                " 3. radioStation = '" + radioStation + '\'' + "\n" + "\t" +
+                " 4. wingMirrorLeftX = " + wingMirrorLeftX + "\n" + "\t" +
+                " 5. wingMirrorLeftY = " + wingMirrorLeftY + "\n" + "\t" +
+                " 6. wingMirrorRightX = " + wingMirrorRightX + "\n" + "\t" +
+                " 7. wingMirrorRightY = " + wingMirrorRightY + "\n" + "\t" +
+                " 8. seatHeight = " + seatHeight + "\n" + "\t" +
+                " 9. seatDepth = " + seatDepth + "\n" + "\t" +
+                "10. seatBackAngle = " + seatBackAngle + "\n" + "\t" +
+                "11. seatHeadAngle = " + seatHeadAngle + "\n" + "\t" +
+                "12. seatBackDepth = " + seatBackDepth + "\n" + "\t" +
+                "13. temperature = " + temperature;
     }
 }
