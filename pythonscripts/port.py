@@ -10,7 +10,7 @@ d = Differ()
 diff = d.compare(before, after)
 plusdiff = "".join(diff)
 plus_start_index = plusdiff.find('+')
-plus_end_index = plusdiff.rfind('+') + 2
+plus_end_index = plusdiff.rfind('+') + 3
 new_port = plusdiff[plus_start_index:plus_end_index].strip('+').strip(' ')
 
 print(new_port)
