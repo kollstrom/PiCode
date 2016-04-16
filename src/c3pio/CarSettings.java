@@ -22,10 +22,6 @@ public class CarSettings {
 
     }
 
-    public enum IgnitionStatusType{
-        OFF,  RUN, ACCESSORY,  START
-    }
-
     public int getSteeringWheelTilt() {
         return steeringWheelTilt;
     }
