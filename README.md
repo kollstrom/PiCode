@@ -35,10 +35,15 @@ For å kompilere:
     */
     javac c3pio/*.java
 </pre>
-For å kjøre:
+
+Før kjøring må legobilen kobles til og startes: koble til USB-kabelen mellom EV3 og Raspberry Pi. Kjør jar-filen DemoCar.jar.
+
+
 <pre>
     java c3pio/Controller
 </pre>
+
+Åpne CarProfilify-appen på en Android-enhet.
 
 -------------------------------------------------------------------------------------------------------------------------------------
 #UNDER UTVIKLING
