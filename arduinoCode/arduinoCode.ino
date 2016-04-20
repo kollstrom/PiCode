@@ -1,12 +1,5 @@
-// These constants won't change.  They're used to give names
-// to the pins used:
-const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
-const int ledPin = 13;                 // LED connected to digital pin 13
-
+const int analogInPin = A0;  // Analog input pin that the MQ-3 Breathalyzer is connected to
 int sensorValue = 0;        // value read from the sensor
-
-
-
 
 void setup() {
   // initialize serial communications at 9600 bps:
