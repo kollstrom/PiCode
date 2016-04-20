@@ -168,7 +168,7 @@ public class Simulator {
             }
             else if(in.equals("port")){
                 try {
-                    Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/port.py");
+                    Runtime.getRuntime().exec("python port.py");
                 } catch (IOException e) {
                     print("Couldn't run port.py");
                 }
