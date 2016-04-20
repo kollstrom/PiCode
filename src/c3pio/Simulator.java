@@ -15,7 +15,7 @@ public class Simulator {
     private static PrintStream ps;
 
     /*
-     * Sumulator contructor that takes in a controller- and a carsettingsobject
+     * Simulator constructor that takes in a Controller- and CarSettings-object
      * and assigns them to its local variables.
      *
      * It also tries to start the connection with the car/EV3, if it fails to
@@ -37,7 +37,6 @@ public class Simulator {
             print("Couldn't connect to legoCar.");
         }
         this.run();
-
     }
 
     /*
@@ -71,7 +70,7 @@ public class Simulator {
             if (in.equals("")){
 
                 /*In case the input is empty/enter, which also happens when you
-                 * write something to the scanner and press then 'enter', you get
+                 * write something to the scanner and then press 'enter', you get
                  * another chance to write a command.
                  */
                 in = scanner.nextLine();
@@ -167,6 +166,13 @@ public class Simulator {
                 break;
 
             }
+            else if(in.equals("port")){
+                try {
+                    Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/port.py");
+                } catch (IOException e) {
+                    print("Couldn't run port.py");
+                }
+            }
             else{
                 if(in.equals("")){
                     print("Please enter a command.");
@@ -251,7 +257,6 @@ public class Simulator {
      * Changes the current seatBackDepth. Implemented in the legoCar.
      */
     private static void changeSeatDepth(CarSettings c, Scanner scanner) {
-
         ps.println("seatDepth"); //Tells the legoCar what the user want to change.
         print("Choose a value between 0 and 10 to change seat depth: ");
         int sd = scanner.nextInt();
@@ -272,7 +277,6 @@ public class Simulator {
      * Changes the current seatBackHeight. Not implemented in the legoCar.
      */
     private static void changeSeatHeight(CarSettings c, Scanner scanner) {
-
         print("Choose a value between 0 and 10 to change seat height");
         int sh = scanner.nextInt();
 
@@ -288,7 +292,6 @@ public class Simulator {
      * Changes the current WingMirrorRightY. Implemented in the legoCar.
      */
     private static void changeWingMirrorRightY(CarSettings c, Scanner scanner) {
-
         ps.println("wingMirrorRightY"); //Tells the legoCar what the user want to change.
         print("Choose a value between -25 and 25 to change wing mirror right y-axis: ");
         int wmry = scanner.nextInt();
@@ -309,7 +312,6 @@ public class Simulator {
      * Changes the current WingMirrorRightX. Not implemented in the legoCar.
      */
     private static void changeWingMirrorRightX(CarSettings c, Scanner scanner) {
-
         print("Choose a value between -25 and 25 to change wing mirror right x-axis: ");
         int wmrx = scanner.nextInt();
 
@@ -325,7 +327,6 @@ public class Simulator {
      * Changes the current WingMirrorLeftY. Implemented in the legoCar.
      */
     private static void changeWingMirrorLeftY(CarSettings c, Scanner scanner) {
-
         ps.println("wingMirrorLeftY"); //Tells the legoCar what the user want to change.
         print("Choose a value between -25 and 25 to change wing mirror left y-axis: ");
         int wmly = scanner.nextInt();
@@ -346,7 +347,6 @@ public class Simulator {
      * Changes the current WingMirrorLeftX. Not implemented in the legoCar.
      */
     private static void changeWingMirrorLeftX(CarSettings c, Scanner scanner) {
-
         print("Choose a value between -25 and 25 to change wing mirror left x-axis: ");
         int wmlx = scanner.nextInt();
 
@@ -362,7 +362,6 @@ public class Simulator {
      * Changes the current RadioStation. Implemented in the legoCar.
      */
     private static void changeRadioStation(CarSettings c, Scanner scanner) {
-
         ps.println("radioStation"); //Tells the legoCar what the user want to change.
         print("Choose a radio station: ");
         String radioStation = scanner.nextLine();
@@ -382,7 +381,6 @@ public class Simulator {
      * Changes the current SteeringWheelDepth. Implemented in the legoCar.
      */
     private static void changeSteeringWheelDepth(CarSettings c, Scanner scanner) {
-
         ps.println("steeringWheelDepth"); //Tells the legoCar what the user want to change.
         print("Choose a value between 0 and 10 to change steering wheel depth: ");
         int swd = scanner.nextInt();
@@ -403,7 +401,6 @@ public class Simulator {
      * Changes the current SteeringWheelTilt. Implemented in the legoCar.
      */
     private static void changeSteeringWheelTilt(CarSettings c, Scanner scanner) {
-
         ps.println("steeringWheelTilt"); //Tells the legoCar what the user want to change.
         print("Choose a value between 0 and 90 to change steering wheel tilt: ");
         int swt = scanner.nextInt();
@@ -425,16 +422,10 @@ public class Simulator {
                                 // that there is a problem with the readings/sensor/...
         try {
             /*
-             * run the Unix "ps -ef" command///////////////////////////////////////////////////////
-             * using the Runtime exec method///////////////////////////////////////////////////////
-             *
-             *  EEEEEE  MM      MM  II LL      !! !! !!
-             *  EE      MMMM  MMMM  II LL      !! !! !!
-             *  EEEEE   MM  MM  MM  II LL      !! !! !!
-             *  EE      MM      MM  II LL
-             *  EEEEEE  MM      MM  II LLLLLLL !! !! !!
+             * run the command to start the arduinoReader.py python-script
+             * using the Runtime exec method
              */
-            Process p = Runtime.getRuntime().exec("python /home/pi/Documents/PiCode/PiCode/pythonscripts/arduinoReader.py");
+            Process p = Runtime.getRuntime().exec("python arduino.py");
 
             // read the output from the command
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -453,7 +444,6 @@ public class Simulator {
                 //The readings aren't error free, so invalid readings are sorted out.
                 if (s != null && !s.equals("") && ! s.equals(", ") && ! s.equals(" ") && ! s.equals(",")) {
                     alcoholValues.add(s);
-
                     Thread.sleep(1); //very small break to reduce the amount of readings collected.
                 }
             }
