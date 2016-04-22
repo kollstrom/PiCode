@@ -25,7 +25,7 @@ public class Controller {
         return (JSONObject) parser.parse(inputString);
     }
 
-    public void setCarSettingsFromJSON(String profileAsJSON){
+    public boolean setCarSettingsFromJSON(String profileAsJSON){
 
         /**
          * Writes the given JSONstring to the car, with loads of exceptions if something is missing
@@ -112,9 +112,13 @@ public class Controller {
 
             System.out.println("Successfully read from app.");
             System.out.println(carSettings);
+
+            return true;
         }
         catch (Exception e){
             System.out.println("Couldn't convert received string to JSON in setCarSettingsFromJSON");
+
+            return false;
         }
     }
 
