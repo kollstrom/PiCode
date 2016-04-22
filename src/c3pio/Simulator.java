@@ -60,7 +60,8 @@ public class Simulator {
         String help = "\nType: \n" +
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
-                "check - to check your alcoholconsentration \n" +
+                "check - to check your blood alcohol concentration \n" +
+                "port - to connect the Arduino to the right port \n" +
                 "quit - to quit program\n \n";
 
         print("Welcome to your car.\n");
@@ -168,7 +169,7 @@ public class Simulator {
             }
             else if(in.equals("port")){
                 try {
-                    Runtime.getRuntime().exec("python port.py");
+                    Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/port.py");
                 } catch (IOException e) {
                     print("Couldn't run port.py");
                 }
@@ -425,7 +426,7 @@ public class Simulator {
              * run the command to start the arduinoReader.py python-script
              * using the Runtime exec method
              */
-            Process p = Runtime.getRuntime().exec("python arduino.py");
+            Process p = Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/arduino.py");
 
             // read the output from the command
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
