@@ -105,13 +105,9 @@ class TCPServer implements Runnable{
          */
 
         try{
-            executed = controller.setCarSettingsFromJSON(payload.get("profile").toString());
+            controller.setCarSettingsFromJSON(payload.get("profile").toString());
             JSONObject reply = new JSONObject();
-            if (executed) {
-                reply.put("message", "Profile executed");
-            } else {
-                reply.put("message", "Execution failed");
-            }
+            reply.put("message", "Profile executed");
             writeResponse(reply);
         }
         catch (IOException e){
