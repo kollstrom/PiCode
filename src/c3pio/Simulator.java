@@ -246,8 +246,6 @@ public class Simulator {
             sba = scanner.nextInt();
         }
         c.setSeatBackAngle(sba);
-        ps.println(0); //Tells the legoCar which state is needed to change the right angle.
-        ps.println(2); //Tells the legoCar which motor to use
         ps.println(sba); //Tells the legoCar what angle to change to.
         print("Seat back angle was changed to " + sba);
         waitForMotors(); //Calls a method that gives the motors time to change the angles.
@@ -266,8 +264,6 @@ public class Simulator {
             sd = scanner.nextInt();
         }
         c.setSeatDepth(sd);
-        ps.println(160); //Tells the legoCar which state is needed to change the right angle.
-        ps.println(2); //Tells the legoCar which motor to use
         ps.println(sd); //Tells the legoCar what angle to change to.
         print("Seat depth was changed to " + sd);
         waitForMotors(); //Calls a method that gives the motors time to change the angles.
@@ -301,8 +297,6 @@ public class Simulator {
             wmry = scanner.nextInt();
         }
         c.setWingMirrorRightY(wmry);
-        ps.println(320); //Tells the legoCar which state is needed to change the right angle.
-        ps.println(1); //Tells the legoCar which motor to use
         ps.println(wmry); //Tells the legoCar what angle to change to.
         print("Wing mirror right y-axis was changed to " + wmry);
         waitForMotors(); //Calls a method that gives the motors time to change the angles.
@@ -336,8 +330,6 @@ public class Simulator {
             wmly = scanner.nextInt();
         }
         c.setWingMirrorLeftY(wmly);
-        ps.println(160); //Tells the legoCar which state is needed to change the right angle.
-        ps.println(3); //Tells the legoCar which motor to use
         ps.println(wmly); //Tells the legoCar what angle to change to.
         print("Wing mirror left y-axis was changed to " + wmly);
         waitForMotors(); //Calls a method that gives the motors time to change the angles.
@@ -390,8 +382,6 @@ public class Simulator {
             swd = scanner.nextInt();
         }
         c.setSteeringWheelDepth(swd);
-        ps.println(0); //Tells the legoCar which state is needed to change the right angle.
-        ps.println(3); //Tells the legoCar which motor to use
         ps.println(swd); //Tells the legoCar what angle to change to.
         print("Steering wheel depth was changed to " + swd);
         waitForMotors(); //Calls a method that gives the motors time to change the angles.
@@ -410,8 +400,6 @@ public class Simulator {
             swt = scanner.nextInt();
         }
         c.setSteeringWheelTilt(swt);
-        ps.println(320); //Tells the legoCar which state is needed to change the right angle.
-        ps.println(3); //Tells the legoCar which motor to use
         ps.println(swt); //Tells the legoCar what angle to change to.
         print("Steering wheel tilt was changed to " + swt);
         waitForMotors(); //Calls a method that gives the motors time to change the angles.
