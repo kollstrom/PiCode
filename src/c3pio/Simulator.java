@@ -60,7 +60,7 @@ public class Simulator {
         String help = "\nType: \n" +
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
-                "check - to check your alcoholconsentration \n" +
+                "check - to check your blood alcohol concentration \n" +
                 "quit - to quit program\n \n";
 
         print("Welcome to your car.\n");
@@ -165,13 +165,6 @@ public class Simulator {
                 System.out.println("Ending program...");
                 break;
 
-            }
-            else if(in.equals("port")){
-                try {
-                    Runtime.getRuntime().exec("python port.py");
-                } catch (IOException e) {
-                    print("Couldn't run port.py");
-                }
             }
             else{
                 if(in.equals("")){
@@ -413,7 +406,7 @@ public class Simulator {
              * run the command to start the arduinoReader.py python-script
              * using the Runtime exec method
              */
-            Process p = Runtime.getRuntime().exec("python arduino.py");
+            Process p = Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/arduino.py");
 
             // read the output from the command
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -428,7 +421,6 @@ public class Simulator {
 
             while((System.currentTimeMillis()-startTime)<10000){
                 s = stdInput.readLine(); //read the values from Arduino
-
                 //The readings aren't error free, so invalid readings are sorted out.
                 if (s != null && !s.equals("") && ! s.equals(", ") && ! s.equals(" ") && ! s.equals(",")) {
                     alcoholValues.add(s);
@@ -446,7 +438,6 @@ public class Simulator {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(permille);
         return permille;
     }
 
