@@ -441,7 +441,7 @@ public class Simulator {
 
             while((System.currentTimeMillis()-startTime)<10000){
                 s = stdInput.readLine(); //read the values from Arduino
-
+                print(s);
                 //The readings aren't error free, so invalid readings are sorted out.
                 if (s != null && !s.equals("") && ! s.equals(", ") && ! s.equals(" ") && ! s.equals(",")) {
                     alcoholValues.add(s);
