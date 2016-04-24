@@ -22,12 +22,13 @@ For å kjøre på Pi-en må repositoriet klones inn på /home/pi/:
 
 For å sette riktig port som Arduinoen kommer inn på, må USB-kabelen til Arduino være frakoblet, men USB-kabelen fra legobilen må være tilkoblet. Kjør Python-skriptet port.py - når programmet prompter deg: koble til USB-kabelen fra Arduinoen og trykk [ENTER]:
 <pre>
+    cd PiCode/src/
     python port.py
 </pre>
 
 For å kompilere:
 <pre>
-    cd PiCode/src/
+    // fortsatt i PiCode/src/
     export CLASSPATH="/home/pi/PiCode/jars/json-simple-1.1.1.jar:." 
     /* Eller tilsvarende sti hvor du har lagret repositoriet. 
     * Simple json er nå lagret i repositoriet så man slipper å laste det ned selv. 
