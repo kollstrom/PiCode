@@ -61,7 +61,6 @@ public class Simulator {
                 "settings - to print current settings\n" +
                 "change - to change a setting \n" +
                 "check - to check your blood alcohol concentration \n" +
-                "port - to connect the Arduino to the right port \n" +
                 "quit - to quit program\n \n";
 
         print("Welcome to your car.\n");
@@ -166,13 +165,6 @@ public class Simulator {
                 System.out.println("Ending program...");
                 break;
 
-            }
-            else if(in.equals("port")){
-                try {
-                    Runtime.getRuntime().exec("python /home/pi/PiCode/pythonscripts/port.py");
-                } catch (IOException e) {
-                    print("Couldn't run port.py");
-                }
             }
             else{
                 if(in.equals("")){
@@ -441,7 +433,6 @@ public class Simulator {
 
             while((System.currentTimeMillis()-startTime)<10000){
                 s = stdInput.readLine(); //read the values from Arduino
-                print(s);
                 //The readings aren't error free, so invalid readings are sorted out.
                 if (s != null && !s.equals("") && ! s.equals(", ") && ! s.equals(" ") && ! s.equals(",")) {
                     alcoholValues.add(s);
@@ -459,7 +450,6 @@ public class Simulator {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(permille);
         return permille;
     }
 
