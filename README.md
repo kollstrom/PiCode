@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------------------------------------------------------------
 #ARDUINO
 -------------------------------------------------------------------------------------------------------------------------------------
-Åpne filen "arduino_circuit.html" for oversikt over hvordan Arduino må kobles opp med alkoholsensoren. Komponentene som trengs er:
+Åpne filen "arduino_circuit.pdf" for oversikt over hvordan Arduino må kobles opp med alkoholsensoren. Komponentene som trengs er:
 <ul>
 <li>1 stk Alcohol Gas Sensor (MQ3)</li>
 <li>1 stk Arduino Uno</li>
