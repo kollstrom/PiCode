@@ -47,12 +47,6 @@ public class Controller {
                 System.out.println("2 steering_wheel_depth");
             }
             try{
-                carSettings.setRadioStation((String) JSONObject.get("radio_station"));
-            }
-            catch (Exception e){
-                System.out.println("3 radio_station");
-            }
-            try{
                 carSettings.setWingMirrorLeftX(Integer.parseInt(JSONObject.get("wing_mirror_left_x").toString()));
             }
             catch (Exception e){
@@ -109,7 +103,13 @@ public class Controller {
             catch (Exception e){
                 System.out.println("13 temperature");
             }
-
+            try{
+                carSettings.setRadioStation((String) JSONObject.get("radio_station"));
+            }
+            catch (Exception e){
+                System.out.println("3 radio_station");
+            }
+            
             System.out.println("Successfully read from app.");
             System.out.println(carSettings);
         }
