@@ -161,10 +161,14 @@ public class Simulator {
                  * A quit command is send to the car/EV3 that tells it to shut down/end the
                  * program and the simulator program ends.
                  */
-                ps.println("quit");
-                System.out.println("Ending program...");
-                break;
+                try{
+                    ps.println("quit");
 
+                }catch (NullPointerException npe){
+
+                }
+                System.out.println("Ending program...");
+                System.exit(-1);
             }
             else{
                 if(in.equals("")){
