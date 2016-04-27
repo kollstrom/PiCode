@@ -104,7 +104,10 @@ public class Controller {
                 System.out.println("13 temperature");
             }
             try{
-                carSettings.setRadioStation((String) JSONObject.get("radio_station"));
+                String station = (String) JSONObject.get("radio_station");
+                carSettings.setRadioStation(station);
+                Simulator.ps.println("radioStation");
+                Simulator.ps.println(station);
             }
             catch (Exception e){
                 System.out.println("3 radio_station");
