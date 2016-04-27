@@ -12,7 +12,7 @@ public class Simulator {
     private CarSettings carSettings;
 
     private Socket clientSocket;
-    private static PrintStream ps;
+    public static PrintStream ps;
 
     /*
      * Simulator constructor that takes in a Controller- and CarSettings-object
