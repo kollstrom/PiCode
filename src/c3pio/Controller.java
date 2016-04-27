@@ -35,13 +35,19 @@ public class Controller {
            JSONObject JSONObject = stringToJSON(profileAsJSON);
 
             try{
-                carSettings.setSteeringWheelTilt(Integer.parseInt(JSONObject.get("steering_wheel_tilt").toString()));
+                int swt = Integer.parseInt(JSONObject.get("steering_wheel_tilt").toString());
+                carSettings.setSteeringWheelTilt(swt);
+                Simulator.ps.println("steeringWheelTilt");
+                Simulator.ps.println(swt);
             }
             catch (Exception e){
                 System.out.println("steering_wheel_tilt error");
             }
             try{
-                carSettings.setSteeringWheelDepth(Integer.parseInt(JSONObject.get("steering_wheel_depth").toString()));
+                int swd = Integer.parseInt(JSONObject.get("steering_wheel_depth").toString());
+                carSettings.setSteeringWheelDepth(swd);
+                Simulator.ps.println("steeringWheelDepth");
+                Simulator.ps.println(swd);
             }
             catch (Exception e){
                 System.out.println("2 steering_wheel_depth");
@@ -53,7 +59,10 @@ public class Controller {
                 System.out.println("4 wing_mirror_left_x");
             }
             try{
-                carSettings.setWingMirrorLeftY(Integer.parseInt(JSONObject.get("wing_mirror_left_y").toString()));
+                int wml = Integer.parseInt(JSONObject.get("wing_mirror_left_y").toString());
+                carSettings.setWingMirrorLeftY(wml);
+                Simulator.ps.println("wingMirrorLeftY");
+                Simulator.ps.println(wml);
             }
             catch (Exception e){
                 System.out.println("5 wing_mirror_left_y");
@@ -65,7 +74,10 @@ public class Controller {
                 System.out.println("6 wing_mirror_right_x");
             }
             try{
-                carSettings.setWingMirrorRightY(Integer.parseInt(JSONObject.get("wing_mirror_right_y").toString()));
+                int wmr = Integer.parseInt(JSONObject.get("wing_mirror_right_y").toString());
+                carSettings.setWingMirrorRightY(wmr);
+                Simulator.ps.println("wingMirrorRightY");
+                Simulator.ps.println(wmr);
             }
             catch (Exception e){
                 System.out.println("7 wing_mirror_right_y");
@@ -76,12 +88,18 @@ public class Controller {
             catch (Exception e){
                 System.out.println("8 seat_height");
             } try{
-                carSettings.setSeatDepth(Integer.parseInt(JSONObject.get("seat_depth").toString()));
+                int seatDepth = Integer.parseInt(JSONObject.get("seat_depth").toString());
+                carSettings.setSeatDepth(seatDepth);
+                Simulator.ps.println("seatDepth");
+                Simulator.ps.println(seatDepth);
             }
             catch (Exception e){
                 System.out.println("9 seat_depth");
             } try{
-                carSettings.setSeatBackAngle(Integer.parseInt(JSONObject.get("seat_back_angle").toString()));
+                int seatBackAngle = Integer.parseInt(JSONObject.get("seat_back_angle").toString());
+                carSettings.setSeatBackAngle(seatBackAngle);
+                Simulator.ps.println("seatBackAngle");
+                Simulator.ps.println(seatBackAngle);
             }
             catch (Exception e){
                 System.out.println("10 seat_back_angle");
